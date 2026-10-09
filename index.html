@@ -338,7 +338,15 @@
      .price-list-table th, .price-list-table td { border-bottom: 1px solid var(--paper-300); padding: var(--space-3); text-align: left; vertical-align: middle; }
      .price-list-table th { background: var(--paper-200); color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
      .price-list-table td:first-child { font-weight: 650; }
-     .price-list-network-note { margin: var(--space-4) 0; border-left: 2px solid var(--status-info); background: var(--paper-200); padding: var(--space-3) var(--space-4); color: var(--text-muted); font-size: 14px; }
+      .price-list-network-note { margin: var(--space-4) 0; border-left: 2px solid var(--status-info); background: var(--paper-200); padding: var(--space-3) var(--space-4); color: var(--text-muted); font-size: 14px; }
+      .history-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
+      .history-kpi { border: 1px solid var(--paper-300); border-radius: var(--radius-panel); background: var(--paper-100); padding: var(--space-4); }
+      .history-kpi strong { display: block; margin-top: var(--space-2); font-family: Consolas, "SFMono-Regular", monospace; font-size: 24px; font-variant-numeric: tabular-nums; }
+      .history-kpi span { color: var(--text-muted); font-size: 12px; }
+      .history-note { margin-bottom: var(--space-4); border-left: 2px solid var(--accent-action); background: var(--paper-200); padding: var(--space-3) var(--space-4); color: var(--text-muted); font-size: 14px; }
+      .history-table { width: 100%; min-width: 920px; border-collapse: collapse; }
+      .history-table th, .history-table td { border-bottom: 1px solid var(--paper-300); padding: var(--space-3); text-align: left; vertical-align: middle; }
+      .history-table th { background: var(--paper-200); color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
     .coverage-grid { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); }
     .coverage-table { width: 100%; border-collapse: collapse; }
     .coverage-table th, .coverage-table td { border-bottom: 1px solid var(--paper-300); padding: var(--space-3); text-align: left; }
@@ -361,7 +369,7 @@
       .comparison-header { align-items: start; flex-direction: column; }
         .comparison-grid { grid-template-columns: repeat(7, minmax(520px, 1fr)); }
     }
-    @media (max-width: 767px) {
+      @media (max-width: 767px) {
       .hero { padding-top: var(--space-6); padding-bottom: var(--space-6); }
       .hero h1 { font-size: 28px; line-height: 1.15; }
       .hero-copy { margin-top: var(--space-3); }
@@ -384,6 +392,7 @@
       .comparison-header { padding-right: var(--space-3); padding-left: var(--space-3); }
       .device-tabs { margin-right: var(--space-3); margin-left: var(--space-3); }
       footer { margin-top: var(--space-8); }
+      .history-summary { grid-template-columns: 1fr; }
     }
     @media print {
       .hero, .view-nav, .filters, .actions, footer { display: none !important; }
@@ -404,7 +413,7 @@
         <p class="eyebrow">Greece / Europe / Current snapshot</p>
         <h1>Competition price intelligence</h1>
         <p class="hero-copy">Verified retail cash prices across the Greek authorized channel set.</p>
-        <p class="hero-meta">Last updated <span id="last-updated">2026-09-25</span></p>
+      <p class="hero-meta">Last updated <span id="last-updated">2026-10-07</span></p>
         <aside class="constraint" role="note">
           <strong>Source constraint</strong>
           <span>Only authorized retailer PDPs are accepted. No price-comparison sites, news, or third-party aggregators.</span>
@@ -474,16 +483,18 @@
         <div class="coverage-grid"><section class="panel" aria-labelledby="status-title"><div class="panel-title"><p class="section-kicker">By status</p><h3 id="status-title">Offer rows</h3></div><div class="table-wrap"><table class="coverage-table"><caption class="sr-only">Offer row counts by status</caption><thead><tr><th scope="col">Status</th><th scope="col">Rows</th><th scope="col">Share</th></tr></thead><tbody id="status-body"></tbody></table></div></section><section class="panel" aria-labelledby="channel-coverage-title"><div class="panel-title"><p class="section-kicker">By channel</p><h3 id="channel-coverage-title">Configured rows and active cash</h3></div><div class="table-wrap"><table class="coverage-table"><caption class="sr-only">Coverage by authorized channel</caption><thead><tr><th scope="col">Channel</th><th scope="col">Rows</th><th scope="col">Active cash</th></tr></thead><tbody id="channel-coverage-body"></tbody></table></div></section></div>
       </section>
 
-      <section id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
-        <div class="section-heading"><div><p class="section-kicker">Historical snapshots</p><h2>History</h2></div><p class="section-note">This canonical snapshot does not include time-series price points.</p></div>
-        <div class="empty-state"><div class="empty-state-marker" aria-hidden="true"></div><h3>No historical series in the current snapshot</h3><p>Current verified offers are available in Offers. Future weekly snapshots can be compared here without changing the canonical data.</p></div>
-      </section>
+       <section id="panel-history" role="tabpanel" aria-labelledby="tab-history" hidden>
+         <div class="section-heading"><div><p class="section-kicker">Weekly price snapshots</p><h2>History</h2></div><p class="section-note">Verified standalone cash prices only.</p></div>
+         <div class="history-note"><strong>Current baseline:</strong> this is the first recorded weekly snapshot. Future weekly captures will add real comparison points; no historical prices are estimated.</div>
+         <div class="history-summary" id="history-summary"></div>
+         <div class="ledger-wrap"><table class="history-table"><caption class="sr-only">Current weekly verified price baseline</caption><thead><tr><th scope="col">Week</th><th scope="col">Product</th><th scope="col">Configuration</th><th scope="col">Channel</th><th scope="col">Cash Price (EUR)</th><th scope="col">Verified PDP</th></tr></thead><tbody id="history-body"></tbody></table></div>
+       </section>
       <footer>Data source: each country’s authorized retailer PDPs. Snapshot date: <span id="footer-date"></span>.</footer>
     </main>
   </div>
   <script id="prices-json" type="application/json">
 {
-  "last_updated": "2026-09-25",
+  "last_updated": "2026-10-07",
   "exchange_rates": {},
   "competitor_mapping": {},
   "regions": {
@@ -496,26 +507,26 @@
             "kotsovolos": {
               "status": "active",
               "base_url": "https://www.kotsovolos.gr/",
-              "last_checked": "2026-09-22",
-              "note": "Oracle-approved Lenovo/Apple batch: 4 active exact offers, 2 unavailable exact-PDP offers, and 6 exact not_found records; Pen + Keyboard are product contents, not gifts."
+              "last_checked": "2026-10-07",
+              "note": "2026-10-07 reconciliation: merged 98 active, 0 unavailable, 21 sold_out, and 0 not_found evidence-backed rows; skipped 28 blocked and 71 pending rows without changing historical values; skipped 3 non-exact/ambiguous identities."
             },
             "Cosmote": {
               "status": "active",
               "base_url": "https://www.germanos.gr/",
-              "last_checked": "2026-09-24",
-              "note": "Oracle-approved Germanos tablet batch: 5 active exact offers, 5 unavailable exact-PDP offers, 7 exact not_found records, and 1 pending record; bundle observations retained without a canonical price; no Apple RAM or Gen 3 inference."
+              "last_checked": "2026-10-07",
+              "note": "2026-10-07 reconciliation: merged 80 active, 45 unavailable, 0 sold_out, and 94 not_found evidence-backed rows; skipped 0 blocked and 1 pending rows without changing historical values; skipped 1 non-exact/ambiguous identities."
             },
             "Plaisio": {
               "status": "active",
               "base_url": "https://www.plaisio.gr/",
-              "last_checked": "2026-09-21",
-              "note": "Oracle-approved Plaisio Lenovo batch: 2 exact active offers, 1 pending offer, and 6 exact not_found offers; pending price and URL remain null pending network verification; gifts and bundles are null."
+              "last_checked": "2026-10-07",
+              "note": "2026-10-07 reconciliation: merged 9 active, 0 unavailable, 0 sold_out, and 1 not_found evidence-backed rows; skipped 0 blocked and 211 pending rows without changing historical values."
             },
             "Public": {
               "status": "active",
               "base_url": "https://www.public.gr/",
-              "last_checked": "2026-09-24",
-              "note": "Public final batch: Samsung Active5 5G Enterprise Edition 6GB/128GB is active at EUR 649 via the supplied direct Public PDP; 8 exact not_found offers have null commercial fields and bilingual search notes. Gifts and bundles are null; no immediate-availability assertion, partner listings, or substitutions."
+              "last_checked": "2026-10-06",
+              "note": "2026-10-06 reconciliation: merged 5 active, 0 unavailable, 0 sold_out, and 0 not_found evidence-backed rows; skipped 0 blocked and 216 pending rows without changing historical values."
             },
             "Vodafone": {
               "status": "active",
@@ -565,7 +576,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337000-smartphone-xiaomi-redmi-a7-pro-4-64gb-bk"
               },
               "Cosmote": {
-                "price": 169.9,
+                "price": 149.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -573,7 +584,7 @@
                 "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-a7-pro-dual-4g-4gb-64gb-smartphone?productId=20447534"
               },
               "Plaisio": {
-                "price": 169.9,
+                "price": 149.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -581,7 +592,7 @@
                 "availability_note": "Delivery, store, and BOX NOW available."
               },
               "Public": {
-                "price": 169,
+                "price": 149,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -629,7 +640,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -715,7 +726,7 @@
                 "source_url": null
               },
               "Plaisio": {
-                "price": 199.9,
+                "price": 229.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -724,7 +735,7 @@
                 "promotion": "Early Bird: 3 premium repair services"
               },
               "Public": {
-                "price": 199,
+                "price": 229,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -776,7 +787,7 @@
                 "source_url": null
               },
               "Plaisio": {
-                "price": 239.9,
+                "price": 269.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -785,7 +796,7 @@
                 "promotion": "Early Bird: 3 premium repair services"
               },
               "Public": {
-                "price": 239,
+                "price": 270,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -856,7 +867,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340307-smartphone-xiaomi-redmi-17-4-128gb-bk-5g"
               },
               "Cosmote": {
-                "price": 239.9,
+                "price": 269.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -873,7 +884,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi-redmi-17-5g-128gb-5g-mauro_5315859"
               },
               "Public": {
-                "price": 239,
+                "price": 270,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -921,7 +932,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340310-smartphone-xiaomi-redmi-17-4-256gb-bk-5g"
               },
               "Cosmote": {
-                "price": 269.89,
+                "price": 299.89,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -938,7 +949,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi-redmi-17-5g-256gb-5g-mauro_5315883"
               },
               "Public": {
-                "price": 270,
+                "price": 299,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -996,7 +1007,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 249.99,
+                "price": 299.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1006,13 +1017,13 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
               },
               "Plaisio": {
-                "price": 249.9,
+                "price": 299.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1061,7 +1072,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 299.99,
+                "price": 349.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1071,13 +1082,13 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
               },
               "Plaisio": {
-                "price": 299.9,
+                "price": 349.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1149,7 +1160,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 299.99,
+                "price": 349.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1160,7 +1171,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340641-smartphone-xiaomi-note-17-128gb-purp-5g"
               },
               "Cosmote": {
-                "price": 299.9,
+                "price": 349.9,
                 "status": "active",
                 "gift": "+1-year warranty",
                 "gift_condition": null,
@@ -1168,7 +1179,7 @@
                 "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-note-17-dual-5g-6gb-128gb-smartphone?productId=20450003"
               },
               "Plaisio": {
-                "price": 299.9,
+                "price": 349.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1217,7 +1228,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 349.99,
+                "price": 399.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1227,7 +1238,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340642-smartphone-xiaomi-note-17-256gb-blk-5g"
               },
               "Cosmote": {
-                "price": 349.9,
+                "price": 399.9,
                 "status": "active",
                 "gift": "+1-year warranty",
                 "gift_condition": null,
@@ -1235,7 +1246,7 @@
                 "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-note-17-dual-5g-6gb-256gb-smartphone?productId=20450006"
               },
               "Plaisio": {
-                "price": 349.9,
+                "price": 399.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1313,7 +1324,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340645-smartphone-xiaomi-nt-17-pro-256gb-blk-5g"
               },
               "Cosmote": {
-                "price": 419.9,
+                "price": 479.9,
                 "status": "active",
                 "gift": "+1-year warranty",
                 "gift_condition": null,
@@ -1390,7 +1401,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 539.99,
+                "price": 599.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1400,7 +1411,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340650-smartphone-xiaomi-nt-17-pro-max-256cl-5g"
               },
               "Cosmote": {
-                "price": 539.9,
+                "price": 599.9,
                 "status": "active",
                 "gift": "+1-year warranty",
                 "gift_condition": null,
@@ -1454,7 +1465,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 599.99,
+                "price": 679.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1464,7 +1475,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340651-smartphone-xiaomi-nt-17-pro-max-512bk-5g"
               },
               "Cosmote": {
-                "price": 599.9,
+                "price": 679.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1541,14 +1552,14 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 699.99,
+                "price": 749.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337396-smartphone-xiaomi-17t-12-256gb-blk-5g"
               },
               "Cosmote": {
-                "price": 699,
+                "price": 749,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1599,14 +1610,14 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 749.99,
+                "price": 799.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337399-smartphone-xiaomi-17t-12-512gb-blk-5g"
               },
               "Cosmote": {
-                "price": 748.99,
+                "price": 798.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -1677,15 +1688,15 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 949.99,
+                "price": 999.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337402-smartphone-xiaomi-17t-pro-12-512-blk-5g"
               },
               "Cosmote": {
-                "price": 949.01,
-                "status": "active",
+                "price": 999.01,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -1750,7 +1761,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -1833,7 +1844,7 @@
               },
               "Cosmote": {
                 "price": 1399,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -1898,7 +1909,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -1962,7 +1973,9 @@
           "8GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-m8-5g-256gb--black/2098744",
           "8GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-m8-5g-512gb--black/2098747",
           "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-m8-256gb-5g-black_5037565",
-          "8GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/m8/pd-01KES228NF2YRW1MM51DW919JY?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141012364002"
+          "8GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/m8/pd-01KES228NF2YRW1MM51DW919JY?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141012364002",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/poco-m8-dual-5g-8gb-256gb-smartphone?productId=20445058",
+          "8GB|512GB|Cosmote": "https://www.germanos.gr/product/item/poco-m8-dual-5g-8gb-512gb-smartphone?productId=20445061"
         }
       },
       "source_urls": {},
@@ -1980,11 +1993,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 349.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-m8-dual-5g-8gb-256gb-smartphone?productId=20445058"
               },
               "Plaisio": {
                 "price": 349.9,
@@ -2040,11 +2053,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 399.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-m8-dual-5g-8gb-512gb-smartphone?productId=20445061"
               },
               "Plaisio": {
                 "price": null,
@@ -2100,7 +2113,9 @@
       "source_urls_by_offer": {
         "Greece": {
           "8GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-m8-pro-5g-256gb--black/2098738",
-          "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-m8-pro-5g-512gb--black/2098741"
+          "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-m8-pro-5g-512gb--black/2098741",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/poco-m8-pro-dual-5g-8gb-256gb-smartphone?productId=20445064",
+          "12GB|512GB|Cosmote": "https://www.germanos.gr/product/item/poco-m8-pro-dual-5g-12gb-512gb-smartphone?productId=20445067"
         }
       },
       "source_urls": {},
@@ -2118,11 +2133,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 399.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-m8-pro-dual-5g-8gb-256gb-smartphone?productId=20445064"
               },
               "Plaisio": {
                 "price": null,
@@ -2180,11 +2195,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 449.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-m8-pro-dual-5g-12gb-512gb-smartphone?productId=20445067"
               },
               "Plaisio": {
                 "price": null,
@@ -2263,7 +2278,7 @@
               },
               "Cosmote": {
                 "price": 529.9,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -2315,15 +2330,15 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 599.99,
+                "price": 569.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/334795-smartphone-poco-x8-pro-512gb-black-5g"
               },
               "Cosmote": {
-                "price": 599.9,
-                "status": "active",
+                "price": 569.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -2400,7 +2415,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -2515,7 +2530,8 @@
       "tier": "ours",
       "source_urls_by_offer": {
         "Greece": {
-          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-f9-pro-12-256gb-leuko_5327601"
+          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-f9-pro-12-256gb-leuko_5327601",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/poco-f9-pro-dual-5g-12gb-256gb-smartphone?productId=20450109"
         }
       },
       "source_urls": {},
@@ -2533,11 +2549,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 899,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-f9-pro-dual-5g-12gb-256gb-smartphone?productId=20450109"
               },
               "Plaisio": {
                 "price": 799.9,
@@ -2589,7 +2605,9 @@
       "source_urls_by_offer": {
         "Greece": {
           "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-f9-ultra-12-256gb-mauro_5327636",
-          "16GB|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-f9-ultra-16-512gb-mauro_5327652"
+          "16GB|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/poco-f9-ultra-16-512gb-mauro_5327652",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/poco-f9-ultra-dual-5g-12gb-256gb-smartphone?productId=20450172",
+          "16GB|512GB|Cosmote": "https://www.germanos.gr/product/item/poco-f9-ultra-dual-5g-16gb-512gb-smartphone?productId=20450174"
         }
       },
       "source_urls": {},
@@ -2607,11 +2625,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 999.01,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-f9-ultra-dual-5g-12gb-256gb-smartphone?productId=20450172"
               },
               "Plaisio": {
                 "price": 899.9,
@@ -2664,11 +2682,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 1099,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-f9-ultra-dual-5g-16gb-512gb-smartphone?productId=20450174"
               },
               "Plaisio": {
                 "price": 999.9,
@@ -2741,7 +2759,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -2801,7 +2819,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -2880,7 +2898,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -2940,7 +2958,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3000,7 +3018,8 @@
           "4GB|128GB|Public": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-xiaomi-redmi-pad-2-11-4gb128gb-4g--graphite-gray/2037264",
           "8GB|256GB|Public": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-xiaomi-redmi-pad-2-11-8gb256gb-4g--graphite-gray/2037265",
           "4GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-4g-graphite-gray-4-128gb_4820576",
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-4g-graphite-gray-8-256gb_4820584"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-4g-graphite-gray-8-256gb_4820584",
+          "4GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-11-4g-4gb-128gb-tablet-grey?productId=20441063"
         }
       },
       "source_urls": {},
@@ -3018,11 +3037,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 229.91,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-11-4g-4gb-128gb-tablet-grey?productId=20441063"
               },
               "Plaisio": {
                 "price": 249.9,
@@ -3079,7 +3098,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3159,7 +3178,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3211,7 +3230,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 299.99,
+                "price": 379.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -3222,7 +3241,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3284,7 +3303,9 @@
           "6GB|128GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/330732-tablet-xiaomi-redmi-2-pro-6-128gb-5g-gr",
           "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/330733-tablet-xiaomi-redmi-2-pro-8-256gb-5g-gr",
           "6GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-pro-5g-gray-6gb-128gb_5002990",
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-pro-5g-gray-8gb-256gb_5003008"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-redmi-pad-2-pro-5g-gray-8gb-256gb_5003008",
+          "6GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-pro-12.1-6gb-128gb-5g-tablet-grey?productId=20444588",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-pro-12.1-8gb-256gb-5g-tablet-grey?productId=20444589"
         }
       },
       "source_urls": {},
@@ -3295,7 +3316,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 349.99,
+                "price": 399.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -3305,11 +3326,11 @@
                 "source_url": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/330732-tablet-xiaomi-redmi-2-pro-6-128gb-5g-gr"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 399.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-pro-12.1-6gb-128gb-5g-tablet-grey?productId=20444588"
               },
               "Plaisio": {
                 "price": 349.9,
@@ -3358,7 +3379,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 399.99,
+                "price": 449.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -3368,11 +3389,11 @@
                 "source_url": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/330733-tablet-xiaomi-redmi-2-pro-8-256gb-5g-gr"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 449.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-pad-2-pro-12.1-8gb-256gb-5g-tablet-grey?productId=20444589"
               },
               "Plaisio": {
                 "price": 399.9,
@@ -3431,7 +3452,8 @@
           "8GB|128GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/333893-tablet-xiaomi-pad-8-8-128-wf-gray",
           "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/333895-tablet-xiaomi-pad-8-8-256-wf-gray",
           "8GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-pad-8-green-8gb-128gb_5077656",
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-pad-8-gray-8gb-256gb_5077664"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/xiaomi-pad-8-gray-8gb-256gb_5077664",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-pad-8-11.2-8gb-256gb-wi-fi-tablet?productId=20446319"
         }
       },
       "source_urls": {},
@@ -3453,7 +3475,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3515,11 +3537,11 @@
                 "source_url": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/333895-tablet-xiaomi-pad-8-8-256-wf-gray"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 499.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-pad-8-11.2-8gb-256gb-wi-fi-tablet?productId=20446319"
               },
               "Plaisio": {
                 "price": 499.9,
@@ -3600,7 +3622,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3652,7 +3674,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 699.99,
+                "price": 749.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -3663,7 +3685,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3725,7 +3747,8 @@
           "4GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327663-smartphone-xiaomi-redmi-15c-4-128-black",
           "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327666-smartphone-xiaomi-redmi-15c-8-256gb-blk",
           "4GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi_4888782",
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi_4888804"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi_4888804",
+          "4GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-128gb-green-smartphone?productId=20442440"
         }
       },
       "source_urls": {},
@@ -3746,11 +3769,11 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327663-smartphone-xiaomi-redmi-15c-4-128-black"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 169.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-128gb-green-smartphone?productId=20442440"
               },
               "Plaisio": {
                 "price": 159.9,
@@ -3802,7 +3825,7 @@
                 "price": 189.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "immediate",
@@ -3810,7 +3833,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -3866,7 +3889,9 @@
           "4GB|128GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-15c-5g-128gb--midnight-black/2071754",
           "4GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-15c-5g-256gb--midnight-black/2071757",
           "4GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327774-smartphone-xiaomi-redmi-15c-5g-4-128-blk",
-          "4GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327777-smartphone-xiaomi-redmi-15c-5g-4-256-blk"
+          "4GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327777-smartphone-xiaomi-redmi-15c-5g-4-256-blk",
+          "4GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-128gb-green-smartphone?productId=20442440",
+          "4GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-256gb-smartphone?productId=20442443"
         }
       },
       "source_urls": {},
@@ -3880,18 +3905,18 @@
                 "price": 169.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "last units",
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327774-smartphone-xiaomi-redmi-15c-5g-4-128-blk"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 169.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-128gb-green-smartphone?productId=20442440"
               },
               "Plaisio": {
                 "price": null,
@@ -3947,11 +3972,11 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327777-smartphone-xiaomi-redmi-15c-5g-4-256-blk"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 189.91,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-15c-dual-5g-4gb-256gb-smartphone?productId=20442443"
               },
               "Plaisio": {
                 "price": null,
@@ -4001,7 +4026,9 @@
       "series": "REDMI 数字",
       "tier": "ours",
       "source_urls_by_offer": {
-        "Greece": {}
+        "Greece": {
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-15-dual-5g-8gb-256gb-titanium-smartphone?productId=20442075"
+        }
       },
       "source_urls": {},
       "specs": [
@@ -4019,7 +4046,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4074,14 +4101,14 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 249.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-15-dual-5g-8gb-256gb-titanium-smartphone?productId=20442075"
               },
               "Plaisio": {
-                "price": 1099,
+                "price": null,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "not_found",
@@ -4134,7 +4161,8 @@
           "8GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-15-5g-256gb--midnight-black/2064278",
           "4GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/326828-smartphone-xiaomi-redmi-15-4-128gb-bk-5g",
           "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/326841-smartphone-xiaomi-redmi-15-8-256gb-bk-5g",
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi_4870018"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi_4870018",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-15-dual-5g-8gb-256gb-titanium-smartphone?productId=20442075"
         }
       },
       "source_urls": {},
@@ -4156,7 +4184,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4216,11 +4244,11 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/326841-smartphone-xiaomi-redmi-15-8-256gb-bk-5g"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 249.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-15-dual-5g-8gb-256gb-titanium-smartphone?productId=20442075"
               },
               "Plaisio": {
                 "price": 249.9,
@@ -4270,7 +4298,9 @@
       "tier": "ours",
       "source_urls_by_offer": {
         "Greece": {
-          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi-redmi-note-15-256gb-4g-blue_5039592"
+          "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/xiaomi-redmi-note-15-256gb-4g-blue_5039592",
+          "6GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-6gb-128gb-smartphone?productId=20444989",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-8gb-256gb-smartphone?productId=20445012"
         }
       },
       "source_urls": {},
@@ -4288,11 +4318,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 269.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-6gb-128gb-smartphone?productId=20444989"
               },
               "Plaisio": {
                 "price": null,
@@ -4346,11 +4376,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 339.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-8gb-256gb-smartphone?productId=20445012"
               },
               "Plaisio": {
                 "price": 279.9,
@@ -4401,7 +4431,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "6GB|128GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-note-15-5g-128gb--black/2098534",
-          "8GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-note-15-5g-256gb--black/2098537"
+          "8GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/xiaomi-redmi-note-15-5g-256gb--black/2098537",
+          "6GB|128GB|Cosmote": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-6gb-128gb-smartphone?productId=20444989"
         }
       },
       "source_urls": {},
@@ -4419,11 +4450,11 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 269.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/xiaomi-redmi-note-15-dual-5g-6gb-128gb-smartphone?productId=20444989"
               },
               "Plaisio": {
                 "price": null,
@@ -4478,7 +4509,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4554,7 +4585,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4630,7 +4661,7 @@
               },
               "Cosmote": {
                 "price": 379.9,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -4845,7 +4876,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4903,7 +4934,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -4978,7 +5009,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -5037,7 +5068,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -5112,7 +5143,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -5171,7 +5202,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": null
@@ -5227,7 +5258,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/poco-f8-pro-512gb--black/2094950",
-          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330989-smartphone-poco-f8-pro-12-512gb-blue-5g"
+          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330989-smartphone-poco-f8-pro-12-512gb-blue-5g",
+          "12GB|512GB|Cosmote": "https://www.germanos.gr/product/item/poco-f8-pro-dual-5g-12gb-512gb-titanium-silver-smartphone?productId=20444734&skuId=20444735"
         }
       },
       "source_urls": {},
@@ -5246,11 +5278,11 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330989-smartphone-poco-f8-pro-12-512gb-blue-5g"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 699.91,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-f8-pro-dual-5g-12gb-512gb-titanium-silver-smartphone?productId=20444734&skuId=20444735"
               },
               "Plaisio": {
                 "price": null,
@@ -5302,7 +5334,8 @@
       "tier": "ours",
       "source_urls_by_offer": {
         "Greece": {
-          "16GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330990-smartphone-poco-f8-ultra-16-512gb-blk-5g"
+          "16GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330990-smartphone-poco-f8-ultra-16-512gb-blk-5g",
+          "16GB|512GB|Cosmote": "https://www.germanos.gr/product/item/poco-f8-ultra-dual-5g-16gb-512gb-smartphone?productId=20444760"
         }
       },
       "source_urls": {},
@@ -5321,11 +5354,11 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330990-smartphone-poco-f8-ultra-16-512gb-blk-5g"
               },
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 949.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/poco-f8-ultra-dual-5g-16gb-512gb-smartphone?productId=20444760"
               },
               "Plaisio": {
                 "price": null,
@@ -5387,7 +5420,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 229.99,
+                "price": 249.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -5465,7 +5498,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 279.99,
+                "price": 299.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5475,7 +5508,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/326932-smartphone-samsung-a17-128gb-black-5g"
               },
               "Cosmote": {
-                "price": 279.91,
+                "price": 299.89,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5558,10 +5591,10 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/321610-smartphone-samsung-gal-a26-128gb-blk-5g"
               },
               "Cosmote": {
-                "price": null,
+                "price": 299.89,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "note": "Exact Germanos search card showed €299.89, but final PDP hydration is incomplete.",
@@ -5626,7 +5659,7 @@
                 "price": 389.91,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Μη διαθέσιμο",
@@ -5695,7 +5728,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 349.99,
+                "price": 379.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5722,8 +5755,8 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": 349.9,
-                "status": "unavailable",
+                "price": 379.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": "10% Galaxy Wearable or Tablet benefit through 30/09 with simultaneous purchase.",
@@ -5761,7 +5794,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 439.99,
+                "price": 499.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5771,10 +5804,10 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338520-smartphone-samsung-a27-256gb-black-5g"
               },
               "Cosmote": {
-                "price": 439.9,
+                "price": 499.91,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Μη διαθέσιμο",
@@ -5847,7 +5880,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 439.9,
+                "price": 479.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5914,7 +5947,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 529.99,
+                "price": 599.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -5924,10 +5957,10 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/334186-smartphone-samsung-gal-a37-256gb-char-5g"
               },
               "Cosmote": {
-                "price": 529.9,
+                "price": 599.9,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Μη διαθέσιμο",
@@ -5988,7 +6021,8 @@
           "8GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung-galaxy-a57-5g-128gb-5g-awesome-gray_5086817",
           "8GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung-galaxy-a57-5g-256gb-5g-awesome-lilac_5086884",
           "8GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/334189-smartphone-samsung-gal-a57-128gb-navy-5g",
-          "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/334193-smartphone-samsung-gal-a57-256gb-navy-5g"
+          "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/334193-smartphone-samsung-gal-a57-256gb-navy-5g",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-a57-5g-8gb-256gb-smartphone?productId=20446977"
         }
       },
       "source_urls": {},
@@ -5999,7 +6033,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 539.9,
+                "price": 589.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -6066,7 +6100,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 599.99,
+                "price": 669.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -6085,14 +6119,14 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-a57-5g-256gb--awesome-gray/2118311"
               },
               "Cosmote": {
-                "price": null,
+                "price": 669.9,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-a57-5g-8gb-256gb-smartphone?productId=20446977"
               },
               "Plaisio": {
                 "price": 599.9,
@@ -6138,7 +6172,8 @@
           "12GB|128GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s25-128gb--icyblue/1993957",
           "12GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung-galaxy-s25-12-128gb-navy_4697278",
           "12GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/317915-galaxy-s25-5g-12gb-128gb-navy",
-          "12GB|128GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s25/pd-01JJNZ3SQ2D3490T56EBQJ0R1X?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010559001"
+          "12GB|128GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s25/pd-01JJNZ3SQ2D3490T56EBQJ0R1X?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010559001",
+          "12GB|128GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-s25-dual-5g-12gb-128gb-smartphone?productId=20442585"
         }
       },
       "source_urls": {},
@@ -6149,7 +6184,7 @@
           "prices": {
             "Greece": {
               "kotsovolos": {
-                "price": 949,
+                "price": 949.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -6166,14 +6201,14 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s25-128gb--icyblue/1993957"
               },
               "Cosmote": {
-                "price": null,
+                "price": 949,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-s25-dual-5g-12gb-128gb-smartphone?productId=20442585"
               },
               "Plaisio": {
                 "price": 949,
@@ -6217,7 +6252,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "12GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s25-edge-256gb--titanium-jetblack/2071412",
-          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327046-smartphone-samsung-s25-edge-256gb-black"
+          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327046-smartphone-samsung-s25-edge-256gb-black",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-s25-edge-dual-5g-12gb-256gb-smartphone?productId=20442509"
         }
       },
       "source_urls": {},
@@ -6243,14 +6279,14 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327046-smartphone-samsung-s25-edge-256gb-black"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1299,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-s25-edge-dual-5g-12gb-256gb-smartphone?productId=20442509"
               },
               "Plaisio": {
                 "price": null,
@@ -6381,8 +6417,8 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s25-fe-256gb--jetblack/2066456"
               },
               "kotsovolos": {
-                "price": null,
-                "status": "unavailable",
+                "price": 879.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/326944-smartphone-samsung-s25-fe-256gb-navy-5g"
@@ -6462,7 +6498,7 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-256gb--black/2107506"
               },
               "kotsovolos": {
-                "price": 1049,
+                "price": 1149.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -6526,7 +6562,8 @@
           "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/332962-smartphone-samsung-s26-256gb-black",
           "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/332966-smartphone-samsung-s26-512gb-black",
           "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/Galaxy-S26+/pd-01KHTTDAA80AY31RRKX48E1C8X?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010586001",
-          "12GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/Galaxy-S26+/pd-01KHTTDAA80AY31RRKX48E1C8X?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010586005"
+          "12GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/Galaxy-S26+/pd-01KHTTDAA80AY31RRKX48E1C8X?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010586005",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-s26-dual-5g-12gb-256gb-smartphone-black?productId=20445704"
         }
       },
       "source_urls": {},
@@ -6545,21 +6582,21 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-256gb--black/2107514"
               },
               "kotsovolos": {
-                "price": 1299,
+                "price": 1399.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/332962-smartphone-samsung-s26-256gb-black"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1399.01,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-s26-dual-5g-12gb-256gb-smartphone-black?productId=20445704"
               },
               "Plaisio": {
                 "price": 899,
@@ -6609,7 +6646,7 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-512gb--black/2107518"
               },
               "kotsovolos": {
-                "price": 1499,
+                "price": 1599.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -6674,7 +6711,8 @@
           "8GB|128GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340343-smartphone-samsung-s26-fe-128gb-blueber",
           "8GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340344-smartphone-samsung-s26-fe-256gb-pistach",
           "8GB|128GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s26-fe-5g/pd-01M1GHS3WA1F1A0WJYQ7JP199T?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010594001",
-          "8GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s26-fe-5g/pd-01M1GHS3WA1F1A0WJYQ7JP199T?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010594004"
+          "8GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s26-fe-5g/pd-01M1GHS3WA1F1A0WJYQ7JP199T?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010594004",
+          "8GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-s26-fe-dual-5g-8gb-256gb-smartphone?productId=20449932"
         }
       },
       "source_urls": {},
@@ -6756,14 +6794,14 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-fe-256gb--graphite/2155904"
               },
               "Cosmote": {
-                "price": null,
+                "price": 899,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-s26-fe-dual-5g-8gb-256gb-smartphone?productId=20449932"
               },
               "Plaisio": {
                 "price": 899,
@@ -6777,7 +6815,7 @@
               },
               "kotsovolos": {
                 "price": 899.99,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340344-smartphone-samsung-s26-fe-256gb-pistach"
@@ -6816,7 +6854,8 @@
           "12GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-ultra-256gb--black/2107497",
           "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung-galaxy-s26-ultra-256gb-5g-black_5056535",
           "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/332970-smartphone-samsung-s26-ultra-256gb-black",
-          "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s26-ultra/pd-01KHTZ7YF7GND100SA88B60P38?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010587001"
+          "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/galaxy-s26-ultra/pd-01KHTZ7YF7GND100SA88B60P38?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010587001",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-s26-ultra-dual-5g-12gb-256gb-smartphone-black?productId=20445712"
         }
       },
       "source_urls": {},
@@ -6835,21 +6874,21 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/samsung-galaxy-s26-ultra-256gb--black/2107497"
               },
               "kotsovolos": {
-                "price": 1499,
+                "price": 1599.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/332970-smartphone-samsung-s26-ultra-256gb-black"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1599,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-s26-ultra-dual-5g-12gb-256gb-smartphone-black?productId=20445712"
               },
               "Plaisio": {
                 "price": 1499,
@@ -6896,7 +6935,9 @@
           "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/smartphone-samsung-galaxy-z-flip7-512gb--jetblack/2054605",
           "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/Galaxy-Z-Flip7/pd-01JZ7M3AY4DQBF0S2S408H021V?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010572001",
           "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/325545-smartphone-samsung-flip-7-256gb-black-5g",
-          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/325547-smartphone-samsung-flip-7-512gb-blue-5g"
+          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/325547-smartphone-samsung-flip-7-512gb-blue-5g",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip7-dual-5g-12gb-256gb-smartphone?productId=20441609",
+          "12GB|512GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip7-dual-5g-12gb-512gb-smartphone?productId=20441612"
         }
       },
       "source_urls": {},
@@ -6915,14 +6956,14 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/smartphone-samsung-galaxy-z-flip7-256gb--jetblack/2054608"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1249,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip7-dual-5g-12gb-256gb-smartphone?productId=20441609"
               },
               "Vodafone": {
                 "price": 1129,
@@ -6933,7 +6974,7 @@
                 "source_url": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/Galaxy-Z-Flip7/pd-01JZ7M3AY4DQBF0S2S408H021V?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141010572001"
               },
               "kotsovolos": {
-                "price": 879.99,
+                "price": 749.99,
                 "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
@@ -6978,14 +7019,14 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/smartphone-samsung-galaxy-z-flip7-512gb--jetblack/2054605"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1449,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip7-dual-5g-12gb-512gb-smartphone?productId=20441612"
               },
               "Vodafone": {
                 "price": null,
@@ -7005,8 +7046,8 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 1019.99,
-                "status": "active",
+                "price": 869.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "last units",
@@ -7065,7 +7106,7 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 699.99,
+                "price": 599.99,
                 "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
@@ -7073,10 +7114,10 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/325558-smartphone-samsung-flip-7-fe-128gb-bk-5g"
               },
               "Cosmote": {
-                "price": null,
+                "price": 999.01,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip7-fe-dual-5g-8gb-128gb-smartphone?productId=20441615"
@@ -7159,17 +7200,17 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung_5216885"
               },
               "kotsovolos": {
-                "price": 1349,
+                "price": 1349.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/339339-smartphone-samsung-flip-8-256gb-grp-5g"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1349,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip8-dual-5g-12gb-256gb-smartphone?productId=20449276"
@@ -7220,17 +7261,17 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/samsung_5231930"
               },
               "kotsovolos": {
-                "price": 1549,
+                "price": 1549.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/339342-smartphone-samsung-flip-8-512gb-grp-5g"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1549,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-flip8-dual-5g-12gb-512gb-smartphone?productId=20449279"
@@ -7300,17 +7341,17 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 1539.99,
+                "price": 1319.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/325550-smartphone-samsung-fold-7-256gb-black-5g"
               },
               "Cosmote": {
-                "price": null,
+                "price": 2199,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-z-fold7-dual-5g-12gb-256gb-smartphone?productId=20441601"
@@ -7361,7 +7402,7 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 1669.99,
+                "price": 1429.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -7516,7 +7557,7 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/smartphone-samsung-galaxy-z-fold8-ultra-512gb--graphite/2145406"
               },
               "kotsovolos": {
-                "price": 2479,
+                "price": 2479.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -7999,7 +8040,7 @@
               },
               "kotsovolos": {
                 "price": 969.99,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Άμεσα διαθέσιμο",
@@ -8335,7 +8376,7 @@
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/312001-smartphone-iphone-16-1"
               },
               "Cosmote": {
-                "price": 799,
+                "price": 1029,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -8410,19 +8451,19 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 979.99,
+                "price": 1099.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/312016-smartphone-iphone-16-16"
               },
               "Cosmote": {
-                "price": 799,
+                "price": 979,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Μη διαθέσιμο",
@@ -8459,7 +8500,9 @@
       "brand": "Apple",
       "model": "iPhone 16 Pro",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -8532,7 +8575,9 @@
       "brand": "Apple",
       "model": "iPhone 16 Pro Max",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -8707,7 +8752,8 @@
         "Greece": {
           "12GB|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/oppo-find-x9-ultra-512gb-5g-canyon-orange_5140463",
           "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/336597-smartphone-oppo-find-x9-ultra-umber",
-          "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-ultra-512gb--tundra-umber/2129406"
+          "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-ultra-512gb--tundra-umber/2129406",
+          "12GB|512GB|Cosmote": "https://www.germanos.gr/product/item/oppo-find-x9-ultra-dual-5g-12gb-512gb-smartphone?productId=20447636"
         }
       },
       "source_urls": {},
@@ -8730,12 +8776,12 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-ultra-512gb--tundra-umber/2129406"
               },
               "Cosmote": {
-                "price": null,
-                "status": "unavailable",
+                "price": 1799,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/oppo-find-x9-ultra-dual-5g-12gb-512gb-smartphone?productId=20447636"
               },
               "Plaisio": {
                 "price": 1699,
@@ -8747,7 +8793,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/oppo-find-x9-ultra-512gb-5g-canyon-orange_5140463"
               },
               "kotsovolos": {
-                "price": 1699.99,
+                "price": 1799,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -8793,7 +8839,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "16GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/330319-smartphone-oppo-find-x9-pro-16-512gb-wh",
-          "16GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-pro-512gb--silk-white/2090396"
+          "16GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-pro-512gb--silk-white/2090396",
+          "16GB|512GB|Cosmote": "https://www.germanos.gr/product/item/oppo-find-x9-pro-dual-5g-16gb-512gb-smartphone?productId=20444006"
         }
       },
       "source_urls": {},
@@ -8816,12 +8863,12 @@
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/oppo-find-x9-pro-512gb--silk-white/2090396"
               },
               "Cosmote": {
-                "price": null,
+                "price": 1399.01,
                 "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/oppo-find-x9-pro-dual-5g-16gb-512gb-smartphone?productId=20444006"
               },
               "Plaisio": {
                 "price": null,
@@ -8839,7 +8886,7 @@
                 "price": 1399.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "OutOfStock",
@@ -8962,7 +9009,9 @@
       "brand": "OPPO",
       "model": "Find X8 Pro",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -9085,7 +9134,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/oppo-reno16-pro-512gb-5g-pop-white_5192188"
               },
               "kotsovolos": {
-                "price": 1099,
+                "price": 1099.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -9168,7 +9217,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/oppo-reno16-512gb-5g-purple-black_5192153"
               },
               "kotsovolos": {
-                "price": 899,
+                "price": 899.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -9463,7 +9512,9 @@
       "brand": "OPPO",
       "model": "Reno15 5G",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -9619,7 +9670,9 @@
       "brand": "OPPO",
       "model": "Reno15 F 5G",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -9707,7 +9760,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 369,
+                "price": 299,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -9739,7 +9792,7 @@
                 "price": 369.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "OutOfStock",
@@ -9782,7 +9835,7 @@
             "Greece": {
               "Cosmote": {
                 "price": null,
-                "status": "unavailable",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
@@ -9939,7 +9992,7 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 209.99,
+                "price": 229.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -10019,7 +10072,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/oppo-a6x-128gb-4g-black-purple_5072263"
               },
               "kotsovolos": {
-                "price": 185.99,
+                "price": 169.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -10156,7 +10209,8 @@
           "16GB|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/motorola-razr-fold-512gb-5g-blue_5124247",
           "16GB|512GB|Cosmote": "https://www.germanos.gr/product/item/motorola-razr-fold-dual-5g-16gb-512gb-smartphone?productId=20447175",
           "16GB|512GB|kotsovolos|Blue": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337268-smarthphone-motorola-razr-fold-16-512-bu",
-          "16GB|512GB|kotsovolos|White": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337269-smarthphone-motorola-razr-fold-16-512-wh"
+          "16GB|512GB|kotsovolos|White": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337269-smarthphone-motorola-razr-fold-16-512-wh",
+          "16GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/337268-smarthphone-motorola-razr-fold-16-512-bu"
         }
       },
       "source_urls": {},
@@ -10170,7 +10224,7 @@
                 "price": 1999,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -10245,7 +10299,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "16GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/motorola-razr-60-ultra-512gb--pantone-scarab/2026205",
-          "16GB|512GB|kotsovolos|Mint": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/323189-smartphone-motorola-rzr60-ult-16-512-mt"
+          "16GB|512GB|kotsovolos|Mint": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/323189-smartphone-motorola-rzr60-ult-16-512-mt",
+          "16GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/323189-smartphone-motorola-rzr60-ult-16-512-mt"
         }
       },
       "source_urls": {},
@@ -10257,7 +10312,7 @@
             "Greece": {
               "Cosmote": {
                 "price": null,
-                "status": "unavailable",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
@@ -10285,7 +10340,7 @@
                 "availability_note": "English and Greek Plaisio searches found no exact PDP; 未找到精确 Plaisio 产品页"
               },
               "kotsovolos": {
-                "price": 909.99,
+                "price": 779.99,
                 "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
@@ -10326,7 +10381,9 @@
       "brand": "Motorola",
       "model": "razr 70 ultra",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -10412,7 +10469,9 @@
           "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/motorola-edge-70-fusion-256gb-5g-black_5062462",
           "12GB|256GB|kotsovolos|Black": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338617-smartphone-motorola-edge70-fus-12-256-bk",
           "12GB|256GB|kotsovolos|Blue": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338618-smartphone-motorola-edge70-fus-12-256-bu",
-          "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/moto-edge-70-fusion-5g/pd-01KWXTWAEZ1XXE0NNJ86J01ZF2?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141011053001"
+          "12GB|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/moto-edge-70-fusion-5g/pd-01KWXTWAEZ1XXE0NNJ86J01ZF2?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141011053001",
+          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338617-smartphone-motorola-edge70-fus-12-256-bk",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/motorola-edge-70-fusion-dual-5g-12gb-256gb-smartphone?productId=20448583"
         }
       },
       "source_urls": {},
@@ -10423,14 +10482,14 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": null,
+                "price": 599.9,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP; οι αγγλικές και ελληνικές αναζητήσεις Germanos δεν βρήκαν ακριβές PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/motorola-edge-70-fusion-dual-5g-12gb-256gb-smartphone?productId=20448583"
               },
               "Public": {
                 "price": 598,
@@ -10499,7 +10558,8 @@
         "Greece": {
           "12GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/motorola-edge-60-fusion-256gb--pantone-slipstream/2037238",
           "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/motorola_4782011",
-          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/324490-smartphone-motorola-edge60-fus-12-256-gy"
+          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/324490-smartphone-motorola-edge60-fus-12-256-gy",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/motorola-edge-60-fusion-dual-5g-12gb-256gb-slipstream-smartphone?productId=20440749"
         }
       },
       "source_urls": {},
@@ -10510,14 +10570,14 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": null,
+                "price": 349.9,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "not_found",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP; οι αγγλικές και ελληνικές αναζητήσεις Germanos δεν βρήκαν ακριβές PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/motorola-edge-60-fusion-dual-5g-12gb-256gb-slipstream-smartphone?productId=20440749"
               },
               "Public": {
                 "price": 299,
@@ -10584,7 +10644,8 @@
           "12GB|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/motorola-edge-70-pro-512gb-5g-blue_5183405",
           "12GB|512GB|kotsovolos|Black": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338619-smartphone-motorola-edge70-pro-12-512-zf",
           "12GB|512GB|kotsovolos|Blue": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338620-smartphone-motorola-edge70-pro-12-512-bu",
-          "12GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/moto-edge-70-pro-5g/pd-01KWXWH3RA1MFN04YDS5Q90GQK?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141011052001"
+          "12GB|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/moto-edge-70-pro-5g/pd-01KWXWH3RA1MFN04YDS5Q90GQK?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141011052001",
+          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/338619-smartphone-motorola-edge70-pro-12-512-zf"
         }
       },
       "source_urls": {},
@@ -10670,7 +10731,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "12GB|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/motorola-edge-60-pro-512gb--pantone-shadow/2038260",
-          "12GB|512GB|kotsovolos|Gray": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/324752-smartphone-motorola-edge60-pro-12-512-gy"
+          "12GB|512GB|kotsovolos|Gray": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/324752-smartphone-motorola-edge60-pro-12-512-gy",
+          "12GB|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/324752-smartphone-motorola-edge60-pro-12-512-gy"
         }
       },
       "source_urls": {},
@@ -10741,7 +10803,8 @@
       "source_urls_by_offer": {
         "Greece": {
           "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/motorola_4899946",
-          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/328624-smartphone-motorola-g86-12-256-blue-5g"
+          "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/328624-smartphone-motorola-g86-12-256-blue-5g",
+          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/motorola-moto-g86-power-dual-5g-12gb-256gb-smartphone?productId=20442056"
         }
       },
       "source_urls": {},
@@ -10752,12 +10815,12 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": null,
-                "status": "unavailable",
+                "price": 279.9,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/motorola-moto-g86-power-dual-5g-12gb-256gb-smartphone?productId=20442056"
               },
               "Public": {
                 "price": null,
@@ -10778,8 +10841,8 @@
                 "availability_note": "Delivery, store, and BOX NOW available."
               },
               "kotsovolos": {
-                "price": 349.9,
-                "status": "active",
+                "price": 309.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Last units.",
@@ -10822,7 +10885,7 @@
             "Greece": {
               "Cosmote": {
                 "price": null,
-                "status": "unavailable",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
@@ -10850,7 +10913,7 @@
                 "availability_note": "English and Greek Plaisio searches found no exact PDP; 未找到精确 Plaisio 产品页"
               },
               "kotsovolos": {
-                "price": 279.9,
+                "price": 249.99,
                 "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
@@ -10893,7 +10956,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 399.9,
+                "price": 349.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -10942,7 +11005,9 @@
       "brand": "Motorola",
       "model": "moto g56 5G",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -10954,7 +11019,7 @@
                 "price": null,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "note": "Germanos bilingual search yielded no product cards; configuration unspecified, retained pending.",
@@ -11027,7 +11092,7 @@
               },
               "kotsovolos": {
                 "price": 139.99,
-                "status": "active",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "最后库存",
@@ -11280,7 +11345,9 @@
       "brand": "Motorola",
       "model": "moto g37 power",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -11392,7 +11459,7 @@
                 "note": "English and Greek/local Plaisio searches found no exact PDP."
               },
               "kotsovolos": {
-                "price": 169.99,
+                "price": 159.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -11562,8 +11629,7 @@
       "source_urls_by_offer": {
         "Greece": {
           "4GB|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/realme-c100x-256gb--deepblue-tides/2156772",
-          "4GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340087-smartphone-realme-c100x-4-256gb-blue-4g",
-          "4GB|256GB|Cosmote": "https://www.germanos.gr/product/item/realme-c100-dual-5g-4gb-256gb-smartphone?productId=20448966"
+          "4GB|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/340087-smartphone-realme-c100x-4-256gb-blue-4g"
         }
       },
       "source_urls": {},
@@ -11574,16 +11640,16 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 229.91,
+                "price": null,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": "Previous €279.91",
                 "availability_note": "Διαθέσιμο",
                 "note": null,
-                "source_url": "https://www.germanos.gr/product/item/realme-c100-dual-5g-4gb-256gb-smartphone?productId=20448966"
+                "source_url": null
               },
               "Public": {
                 "price": 219,
@@ -11849,7 +11915,9 @@
       "brand": "realme",
       "model": "14 Pro 5G",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -11942,7 +12010,7 @@
                 "source_url": "https://www.public.gr/product/kinita/kinita-smartphones/realme-16-5g-256gb--air-black/2126978"
               },
               "Cosmote": {
-                "price": 369.9,
+                "price": 349.9,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12016,7 +12084,7 @@
               },
               "Cosmote": {
                 "price": 399.9,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο；2-3 个工作日内配送",
@@ -12075,7 +12143,7 @@
             "Greece": {
               "Cosmote": {
                 "price": 579.9,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "低库存",
@@ -12121,7 +12189,9 @@
       "model": "realme 16 Pro+ 5G",
       "tier": "competitor",
       "source_urls_by_offer": {
-        "Greece": {}
+        "Greece": {
+          "12GB|512GB|Cosmote": "https://www.germanos.gr/product/item/realme-16-pro-dual-5g-12gb-512gb-master-grey-smartphone?productId=20445288"
+        }
       },
       "source_urls": {},
       "specs": [
@@ -12141,6 +12211,11 @@
                 "availability_note": null,
                 "note": "Skroutz replacement channel pending verification; prior the previous channel record removed.",
                 "source_url": null
+              },
+              "Cosmote": {
+                "status": "active",
+                "price": 579.9,
+                "source_url": "https://www.germanos.gr/product/item/realme-16-pro-dual-5g-12gb-512gb-master-grey-smartphone?productId=20445288"
               }
             }
           }
@@ -12397,7 +12472,7 @@
                 ]
               },
               "kotsovolos": {
-                "price": 199.9,
+                "price": 199.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12472,7 +12547,7 @@
                 ]
               },
               "kotsovolos": {
-                "price": 239.9,
+                "price": 239.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12519,7 +12594,7 @@
                 "price": 329.9,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": null,
@@ -12547,7 +12622,7 @@
                 ]
               },
               "kotsovolos": {
-                "price": 329.9,
+                "price": 329.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12624,7 +12699,7 @@
                 "note": "English and Greek/local Plaisio searches found no exact PDP; 英文和希腊语 Plaisio 搜索未找到精确 PDP"
               },
               "kotsovolos": {
-                "price": 379.9,
+                "price": 379.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12680,7 +12755,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/samsung-galaxy-tab-a11-plus-5g-8gb-256gb-gray_5008700"
               },
               "kotsovolos": {
-                "price": 459.9,
+                "price": 459.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12756,7 +12831,7 @@
                 ]
               },
               "kotsovolos": {
-                "price": 399.99,
+                "price": 449.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -12904,8 +12979,8 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": null,
-                "status": "unavailable",
+                "price": 849.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Product title confirms 12GB/256GB/5G; technical capacity field is stale at 128GB.",
@@ -13022,7 +13097,7 @@
                 "price": 899,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": null,
@@ -13079,7 +13154,6 @@
       "tier": "competitor",
       "source_urls_by_offer": {
         "Greece": {
-          "12GB|256GB|Cosmote": "https://www.germanos.gr/product/item/samsung-galaxy-tab-s10-ultra-14.6-wi-fi-12gb-256gb-gray-tablet?productId=20435630",
           "12GB|256GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/313162-tablet-samsung-s10-ultra-12-256gb-gr-wf"
         }
       },
@@ -13091,12 +13165,12 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 1399.01,
-                "status": "active",
+                "price": null,
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο；2-3 个工作日内配送",
-                "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-tab-s10-ultra-14.6-wi-fi-12gb-256gb-gray-tablet?productId=20435630"
+                "source_url": null
               },
               "kotsovolos": {
                 "price": 979.99,
@@ -13184,8 +13258,8 @@
                 "source_url": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-samsung-galaxy-tab-s10-ultra-12gb256gb-5g--moonstone-gray/1970092"
               },
               "kotsovolos": {
-                "price": null,
-                "status": "unavailable",
+                "price": 1549.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Unavailable",
@@ -13237,7 +13311,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 999.01,
+                "price": 1099,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -13258,7 +13332,7 @@
                 "source_url": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-samsung-galaxy-tab-s11-11-12gb128gb-wi-fi--silver/2071341"
               },
               "kotsovolos": {
-                "price": 999,
+                "price": 1099.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -13310,7 +13384,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 1149,
+                "price": 1249,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -13331,7 +13405,7 @@
                 "source_url": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-samsung-galaxy-tab-s11-11-12gb128gb-5g--silver/2071344"
               },
               "kotsovolos": {
-                "price": 1149,
+                "price": 1249.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -13405,7 +13479,7 @@
                 "source_url": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-samsung-galaxy-tab-s11-ultra-146-12gb256gb-wi-fi--gray/2071346"
               },
               "kotsovolos": {
-                "price": 1439,
+                "price": 1439.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -13476,8 +13550,8 @@
                 "source_url": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-samsung-galaxy-tab-s11-ultra-146-12gb256gb-5g--gray/2071349"
               },
               "kotsovolos": {
-                "price": null,
-                "status": "unavailable",
+                "price": 1589.99,
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Unavailable",
@@ -13528,15 +13602,15 @@
             "Greece": {
               "Cosmote": {
                 "price": 519,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "低库存",
                 "source_url": "https://www.germanos.gr/product/item/samsung-galaxy-tab-active5-8-wi-fi-6gb-128gb-green-tablet?productId=20429990"
               },
               "kotsovolos": {
-                "price": null,
-                "status": "unavailable",
+                "price": 549.99,
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Unavailable",
@@ -13650,7 +13724,7 @@
             "Greece": {
               "Cosmote": {
                 "price": 699,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -13862,7 +13936,6 @@
       "tier": "competitor",
       "source_urls_by_offer": {
         "Greece": {
-          "|128GB|Cosmote": "https://www.germanos.gr/product/item/apple-ipad-mini-8.3-wi-fi-128gb?productId=20436364",
           "|128GB|Public": "https://www.public.gr/product/tablets/syskeyes-tablet/apple-ipad-mini-83-2024-7th-gen-128gb-wi-fi--space-gray/1978367",
           "|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/apple-ipad-mini-7th-gen-wifi-128-gb-tablet-8-dot-3-space-gray_4657004"
         }
@@ -13875,12 +13948,12 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 699,
-                "status": "unavailable",
+                "price": null,
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Μη διαθέσιμο",
-                "source_url": "https://www.germanos.gr/product/item/apple-ipad-mini-8.3-wi-fi-128gb?productId=20436364"
+                "source_url": null
               },
               "Public": {
                 "price": 699,
@@ -13949,7 +14022,7 @@
             "Greece": {
               "Cosmote": {
                 "price": 659,
-                "status": "active",
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "availability_note": "Διαθέσιμο",
@@ -14085,7 +14158,7 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": 1009.99,
+                "price": 1079.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -14143,7 +14216,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 449,
+                "price": 499,
                 "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
@@ -14266,7 +14339,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 1018.99,
+                "price": 999,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -14337,7 +14410,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 849,
+                "price": 799,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -14413,7 +14486,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 1218.99,
+                "price": 1179,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -14485,7 +14558,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 1049,
+                "price": 1009,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -14657,7 +14730,7 @@
               },
               "Cosmote": {
                 "price": 1339,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "bundle_price": null,
@@ -14732,7 +14805,7 @@
               },
               "Cosmote": {
                 "price": 1948.99,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "bundle_price": null,
@@ -14805,7 +14878,7 @@
               },
               "Cosmote": {
                 "price": 1689,
-                "status": "unavailable",
+                "status": "active",
                 "gift": null,
                 "gift_condition": null,
                 "bundle_price": null,
@@ -14882,7 +14955,7 @@
                 "source_url": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/318862-lenovo-yoga-tab-pluspenkeybd-16-256-wf"
               },
               "Cosmote": {
-                "price": 869,
+                "price": 899.91,
                 "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
@@ -14929,7 +15002,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/lenovo-yoga-tab-plus-12-comma-7-16-512gb-wifi-pen-plus-kb_4888642"
               },
               "kotsovolos": {
-                "price": 849.99,
+                "price": 949.99,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "status": "active",
@@ -15061,7 +15134,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "pending",
+                "status": "not_found",
                 "gift": null,
                 "gift_condition": null,
                 "bundle_price": null,
@@ -15090,7 +15163,11 @@
       "brand": "Lenovo",
       "model": "Tab M9",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {
+          "3GB|32GB|Cosmote": "https://www.germanos.gr/product/item/lenovo-tab-m9-9-wi-fi-3gb-32gb-tablet-thiki-prostasia-othonis?productId=20423846"
+        }
+      },
       "source_urls": {},
       "specs": [
         {
@@ -15117,14 +15194,14 @@
                 "source_url": null
               },
               "Cosmote": {
-                "price": null,
-                "status": "not_found",
+                "price": 149.9,
+                "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
                 "bundle_price": null,
                 "bundle_condition": null,
                 "note": "English and Greek Germanos searches found no exact PDP; οι αγγλικές και ελληνικές αναζητήσεις Germanos δεν βρήκαν ακριβές PDP.",
-                "source_url": null
+                "source_url": "https://www.germanos.gr/product/item/lenovo-tab-m9-9-wi-fi-3gb-32gb-tablet-thiki-prostasia-othonis?productId=20423846"
               },
               "Skroutz": {
                 "price": null,
@@ -15210,7 +15287,8 @@
           "4GB|128GB|Public": "https://www.public.gr/product/tablets/syskeyes-tablet/tablet-lenovo-tab-m11-11-4gb128gb-wi-fi--luna-grey-lenovo-tab-pen-folio-case/1913181",
           "4GB|128GB|kotsovolos": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/300731-tablet-lenovo-m11pen-4gb-128gb-wf-grey",
           "4GB|128GB|Cosmote|Pen": "https://www.germanos.gr/product/item/lenovo-tab-m11-11-wi-fi-4gb-128gb-luna-grey-tablet-pen?productId=20430186",
-          "4GB|128GB|Cosmote|Pen+Folio": "https://www.germanos.gr/product/item/lenovo-tab-m11-11-wi-fi-4gb-128gb-tablet-pen-thiki-folio?productId=20430069"
+          "4GB|128GB|Cosmote|Pen+Folio": "https://www.germanos.gr/product/item/lenovo-tab-m11-11-wi-fi-4gb-128gb-tablet-pen-thiki-folio?productId=20430069",
+          "4GB|128GB|Cosmote": "https://www.germanos.gr/product/item/lenovo-tab-m11-11-wi-fi-4gb-128gb-luna-grey-tablet-pen?productId=20430186"
         }
       },
       "source_urls": {},
@@ -15239,10 +15317,10 @@
                 "source_url": null
               },
               "kotsovolos": {
-                "price": null,
+                "price": 79.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": null,
@@ -15251,7 +15329,7 @@
                 "source_url": "https://www.kotsovolos.gr/computing/laptop-tablet-ipad/tablets-ipad/300731-tablet-lenovo-m11pen-4gb-128gb-wf-grey"
               },
               "Cosmote": {
-                "price": null,
+                "price": 199.9,
                 "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
@@ -15294,7 +15372,9 @@
       "brand": "Lenovo",
       "model": "Idea Tab Plus",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -15386,7 +15466,7 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "unavailable",
+                "status": "not_found",
                 "gift": "Lenovo Tab Pen",
                 "gift_condition": "Germanos 页面标题显示随套装附送；设备当前无货",
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
@@ -15449,17 +15529,17 @@
               },
               "Cosmote": {
                 "price": null,
-                "status": "unavailable",
+                "status": "not_found",
                 "gift": "Lenovo Tab Pen Plus、键盘",
                 "gift_condition": "Germanos 页面标题显示随套装附送；设备当前无货",
                 "availability_note": "Germanos 官方 PDP 已核验为 Μη διαθέσιμο",
                 "source_url": null
               },
               "kotsovolos": {
-                "price": null,
+                "price": 589.99,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "unavailable",
+                "status": "sold_out",
                 "gift": null,
                 "gift_condition": null,
                 "promotion": null,
@@ -15573,7 +15653,9 @@
       "brand": "Lenovo",
       "model": "Tab P12",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -15658,7 +15740,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 149.9,
+                "price": 199.9,
                 "status": "unavailable",
                 "gift": null,
                 "gift_condition": null,
@@ -15666,7 +15748,7 @@
                 "source_url": "https://www.germanos.gr/product/item/lenovo-tab-10.1-wifi-4gb-64gb-tablet-case?productId=20436512"
               },
               "kotsovolos": {
-                "price": 149.99,
+                "price": 199.99,
                 "status": "active",
                 "gift": "保护壳",
                 "gift_condition": "产品标题显示随套装附送",
@@ -15723,7 +15805,9 @@
       "brand": "Lenovo",
       "model": "Tab M8 Gen 4 2024",
       "tier": "competitor",
-      "source_urls_by_offer": {},
+      "source_urls_by_offer": {
+        "Greece": {}
+      },
       "source_urls": {},
       "specs": [
         {
@@ -15818,7 +15902,7 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": 149.9,
+                "price": 199.9,
                 "status": "active",
                 "gift": "保护壳",
                 "gift_condition": "页面显示随设备附送",
@@ -15834,7 +15918,7 @@
                 "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tablet/lenovo-tab-one-8-comma-7-4-64gb-wifi-grey-case_4888537"
               },
               "kotsovolos": {
-                "price": 129.99,
+                "price": 179.99,
                 "status": "active",
                 "gift": null,
                 "gift_condition": null,
@@ -15871,6 +15955,527 @@
       "source_urls_by_offer": {},
       "source_urls": {},
       "specs": []
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 11 Pro XL",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google-pixel-11-pro-xl-256gb-5g-obsidian_5343607"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "12GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 1499,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google-pixel-11-pro-xl-256gb-5g-obsidian_5343607",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 11 Pro",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefonia/smartphones/google-pixel-11-pro-256gb-5g-obsidian_5343585"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "12GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 1299,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefonia/smartphones/google-pixel-11-pro-256gb-5g-obsidian_5343585",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 11",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefonia/smartphones/google-pixel-11-256gb-5g-hibiscus_5387728"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "12GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 1099,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefonia/smartphones/google-pixel-11-256gb-5g-hibiscus_5387728",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 10 Pro Fold",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "16GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google-pixel-10-pro-fold-256gb-5g_5064864"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "16GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 1899,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google-pixel-10-pro-fold-256gb-5g_5064864",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 10 Pro XL",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "16GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972511"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "16GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 1099,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972511",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 10 Pro",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "16GB|128GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972554"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "16GB",
+          "storage": "128GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 899,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972554",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 10",
+      "tier": "competitor",
+      "source_urls_by_offer": {
+        "Greece": {
+          "12GB|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972600"
+        }
+      },
+      "source_urls": {},
+      "specs": [
+        {
+          "ram": "12GB",
+          "storage": "256GB",
+          "prices": {
+            "Greece": {
+              "kotsovolos": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Cosmote": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Plaisio": {
+                "price": 999,
+                "status": "active",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/google_4972600",
+                "note": "Direct Plaisio PDP verified 2026-10-01."
+              },
+              "Public": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "not_found",
+                "gift": null,
+                "gift_condition": null,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "source_url": null,
+                "note": "Direct search found no qualifying exact Pixel PDP; partner listings excluded."
+              }
+            }
+          }
+        }
+      ]
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 10a",
+      "tier": "competitor",
+      "source_urls_by_offer": {},
+      "source_urls": {},
+      "specs": []
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 9 Pro XL",
+      "tier": "competitor",
+      "source_urls_by_offer": {},
+      "source_urls": {},
+      "specs": []
+    },
+    {
+      "brand": "Google",
+      "model": "Google Pixel 9a",
+      "tier": "competitor",
+      "source_urls_by_offer": {},
+      "source_urls": {},
+      "specs": []
     }
   ],
   "availability_registry": []
@@ -15883,8 +16488,9 @@
        var snapshot = JSON.parse(document.getElementById("prices-json").textContent);
        var country = "Greece";
        var market = snapshot.regions.Europe.countries[country];
-       var channels = Object.keys(market.channels);
-       var offers = [];
+        var channels = Object.keys(market.channels);
+        var offers = [];
+       var catalogProducts = snapshot.products || [];
       var statusOrder = ["active", "pending", "unavailable", "sold_out", "blocked", "not_found", "not_listed"];
       var statusLabels = {
         active: "Active",
@@ -15919,7 +16525,7 @@
 
       function formatPrice(value) {
         if (typeof value !== "number" || !Number.isFinite(value)) return "";
-        return "€" + value.toLocaleString("en-US", { minimumFractionDigits: 0, maximumFractionDigits: 2 });
+        return "EUR " + value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
       }
 
       function formatConfig(spec) {
@@ -15941,6 +16547,51 @@
         return safeUrl(quote.source_url) || safeUrl(mapped);
       }
 
+      var USER_NETWORK_CLASSIFICATIONS = {
+        Apple: {
+          "iPhone 16": "5G", "iPhone 16 Plus": "5G", "iPhone 16 Pro": "5G", "iPhone 16 Pro Max": "5G", "iPhone 16e": "5G", "iPhone 17": "5G", "iPhone 17 Pro": "5G", "iPhone 17 Pro Max": "5G", "iPhone 17e": "5G", "iPhone 18 Pro": "5G", "iPhone 18 Pro Max": "5G", "iPhone Air": "5G", "iPhone Duo": "5G",
+          "iPad A16 5G": "5G", "iPad A16 Wi-Fi": "Wi-Fi", "iPad Air 11 (M4) 5G": "5G", "iPad Air 11 (M4) Wi-Fi": "Wi-Fi", "iPad Air 13 (M4) 5G": "5G", "iPad Air 13 (M4) Wi-Fi": "Wi-Fi", "iPad mini A17 Pro 5G": "5G", "iPad mini A17 Pro Wi-Fi": "Wi-Fi", "iPad Pro 11 (M5) 5G": "5G", "iPad Pro 11 (M5) Wi-Fi": "Wi-Fi", "iPad Pro 13 (M5) 5G": "5G", "iPad Pro 13 (M5) Wi-Fi": "Wi-Fi"
+         },
+        Google: {
+          "Google Pixel 11 Pro XL": "5G", "Google Pixel 11 Pro": "5G", "Google Pixel 11": "5G", "Google Pixel 10 Pro Fold": "5G", "Google Pixel 10 Pro XL": "5G", "Google Pixel 10 Pro": "5G", "Google Pixel 10": "5G", "Google Pixel 10a": "5G", "Google Pixel 9 Pro XL": "5G", "Google Pixel 9a": "5G"
+        },
+        Motorola: {
+          "edge 60 fusion": "5G", "edge 60 pro": "5G", "edge 70 fusion": "5G", "edge 70 pro": "5G", "moto g06": "4G", "moto g06 power": "4G", "moto g35 5G": "5G", "moto g37 power": "4G", "moto g56 5G": "5G", "moto g77": "5G", "moto g86 5G": "5G", "moto g86 power 5G": "5G", "motorola razr fold": "5G", "motorola signature": "5G", "razr 60 ultra": "5G", "razr 70 ultra": "5G"
+        },
+        OPPO: {
+          "A6": "4G", "A6 5G": "5G", "A6 Pro 5G": "5G", "A6x": "4G", "A6x 5G": "5G", "Find X8 Pro": "5G", "Find X9": "5G", "Find X9 Pro": "5G", "Find X9 Ultra": "5G", "Reno15 5G": "5G", "Reno15 F 5G": "5G", "Reno15 FS 5G": "5G", "Reno15 Pro 5G": "5G", "Reno16 5G": "5G", "Reno16 F 5G": "5G", "Reno16 FS 5G": "5G", "Reno16 Pro 5G": "5G"
+        },
+        Poco: {
+          "Poco C85": "4G", "Poco F7 5G": "5G", "Poco F8 Pro 5G": "5G", "Poco F8 Ultra 5G": "5G", "Poco F9 Pro": "5G", "Poco F9 Ultra": "5G", "Poco M8": "4G", "Poco M8 Pro": "5G", "Poco X8 Pro": "5G", "Poco X8 Pro Max": "5G"
+        },
+        realme: {
+          "14 5G": "5G", "14 Pro 5G": "5G", "14x 5G": "5G", "16 5G": "5G", "16 Pro 5G": "5G", "16 Pro+ 5G": "5G", "GT 7 5G": "5G", "GT 7 Pro": "5G", "GT 8 Pro": "5G", "realme 16 Pro+ 5G": "5G"
+        },
+        Realme: { "C100 5G": "5G", "C100x": "4G", "C75": "4G", "Note 70T": "4G", "Note 80T": "4G" },
+        Redmi: {
+          "Redmi 15": "4G", "Redmi 15 5G": "5G", "Redmi 15C": "4G", "Redmi 15C 5G": "5G", "Redmi 17": "4G", "Redmi 17 5G": "5G", "Redmi A7 Pro": "4G", "Redmi Note 15": "4G", "Redmi Note 15 5G": "5G", "Redmi Note 15 Pro": "4G", "Redmi Note 15 Pro 5G": "5G", "Redmi Note 15 Pro+ 5G": "5G", "Redmi Note 17": "4G", "Redmi Note 17 5G": "5G", "Redmi Note 17 Pro 5G": "5G", "Redmi Note 17 Pro Max 5G": "5G", "Redmi Pad 2 4G": "4G", "Redmi Pad 2 9.7 WiFi": "Wi-Fi", "Redmi Pad 2 Pro 5G": "5G", "Redmi Pad 2 Pro WiFi": "Wi-Fi", "Redmi Pad 2 WiFi": "Wi-Fi"
+        },
+        Samsung: {
+          "A17": "4G", "A17 5G": "5G", "A26 5G": "5G", "A27 5G": "5G", "A37 5G": "5G", "A57 5G": "5G", "S25": "5G", "S25 Edge": "5G", "S25 FE": "5G", "S26": "5G", "S26 FE": "5G", "S26 Ultra": "5G", "S26+": "5G", "XCover7": "5G", "XCover7 Pro": "5G", "Z Flip7": "5G", "Z Flip7 FE": "5G", "Z Flip8": "5G", "Z Fold7": "5G", "Z Fold8": "5G", "Z Fold8 Ultra": "5G",
+          "Active5": "4G", "Active5 5G": "5G", "Active5 Pro": "4G", "Active5 Pro 5G": "5G", "S10 FE 5G": "5G", "S10 FE Wi-Fi": "Wi-Fi", "S10 FE+ 5G": "5G", "S10 FE+ Wi-Fi": "Wi-Fi", "S10 Lite Wi-Fi": "Wi-Fi", "S10 Ultra 5G": "5G", "S10 Ultra Wi-Fi": "Wi-Fi", "S11 5G": "5G", "S11 Ultra 5G": "5G", "S11 Ultra Wi-Fi": "Wi-Fi", "S11 Wi-Fi": "Wi-Fi", "Tab A11 LTE": "4G", "Tab A11 Wi-Fi": "Wi-Fi", "Tab A11+ 5G": "5G", "Tab A11+ Wi-Fi": "Wi-Fi"
+        },
+        Xiaomi: {
+          "Xiaomi 17": "5G", "Xiaomi 17 Ultra": "5G", "Xiaomi 17T": "5G", "Xiaomi 17T Pro": "5G", "Xiaomi Pad 8 Pro WiFi": "Wi-Fi", "Xiaomi Pad 8 WiFi": "Wi-Fi"
+        },
+        Lenovo: {
+          "Idea Tab": "Wi-Fi", "Idea Tab Plus": "Wi-Fi", "Idea Tab Pro": "Wi-Fi", "Legion Tab Gen 3": "Wi-Fi", "Tab": "Wi-Fi", "Tab M11": "Wi-Fi", "Tab M8 Gen 4 2024": "Wi-Fi", "Tab M9": "Wi-Fi", "Tab One": "Wi-Fi", "Tab P12": "Wi-Fi", "Yoga Tab": "Wi-Fi", "Yoga Tab Plus": "Wi-Fi"
+        }
+      };
+
+      function classificationKey(brand, model) {
+        return String(brand || "") + "\u0000" + String(model || "");
+      }
+
+      function userNetworkClassification(brand, model) {
+        var brandMap = USER_NETWORK_CLASSIFICATIONS[brand];
+        return brandMap ? brandMap[model] || "" : "";
+      }
+
       snapshot.products.forEach(function (product) {
         (product.specs || []).forEach(function (spec) {
           var countryPrices = spec.prices && spec.prices[country] ? spec.prices[country] : {};
@@ -15948,7 +16599,8 @@
             var quote = countryPrices[channel] || { status: "pending" };
             offers.push({
               product: product.model || "Unnamed product",
-               brand: product.brand || "Other",
+                brand: product.brand || "Other",
+                classificationKey: classificationKey(product.brand, product.model),
                tier: product.tier || "competitor",
                configuration: formatConfig(spec),
                configKey: configKey(spec),
@@ -16029,8 +16681,10 @@
          return EXPLICIT_TABLET_MODELS.indexOf(product) !== -1 || /ipad|pad|tablet|tab\b/.test(label) ? "tablet" : "phone";
        }
 
-       function networkType(offer) {
-         var quote = offer.quote || {};
+        function networkType(offer) {
+          var userClassification = userNetworkClassification(offer.brand, offer.product);
+          if (userClassification) return userClassification;
+          var quote = offer.quote || {};
          var facts = [offer.product, offer.configuration, offer.source, quote.note, quote.availability_note, quote.promotion, quote.bundle_condition].join(" ");
          var has4g = /\b4g\b/i.test(facts);
          var has5g = /\b5g\b/i.test(facts);
@@ -16184,6 +16838,30 @@
          });
        }
 
+       function snapshotWeek(value) {
+         var date = new Date(String(value) + "T00:00:00Z");
+         var target = new Date(Date.UTC(date.getUTCFullYear(), date.getUTCMonth(), date.getUTCDate()));
+         var day = target.getUTCDay() || 7;
+         target.setUTCDate(target.getUTCDate() + 4 - day);
+         var yearStart = new Date(Date.UTC(target.getUTCFullYear(), 0, 1));
+         var week = Math.ceil((((target - yearStart) / 86400000) + 1) / 7);
+         return target.getUTCFullYear() + "-W" + String(week).padStart(2, "0");
+       }
+
+       function renderHistory() {
+         var rows = filteredOffers().filter(function (offer) {
+           return offer.status === "active" && typeof offer.quote.price === "number" && Number.isFinite(offer.quote.price);
+         }).sort(function (a, b) {
+           return a.quote.price - b.quote.price || a.product.localeCompare(b.product) || a.configuration.localeCompare(b.configuration) || a.channel.localeCompare(b.channel);
+         });
+         var week = snapshotWeek(snapshot.last_updated);
+         document.getElementById("history-summary").innerHTML = '<article class="history-kpi"><span>Snapshots recorded</span><strong>1</strong><span>Current baseline only</span></article><article class="history-kpi"><span>Baseline week</span><strong>' + escapeHtml(week) + '</strong><span>From the latest verified snapshot</span></article><article class="history-kpi"><span>Cash price points</span><strong>' + rows.length.toLocaleString("en-US") + '</strong><span>After current filters</span></article>';
+         document.getElementById("history-body").innerHTML = rows.map(function (offer) {
+           var pdp = offer.source ? '<a class="pdp-link" href="' + escapeHtml(offer.source) + '" target="_blank" rel="noopener noreferrer">Open ' + escapeHtml(offer.channel) + ' PDP</a>' : '<span class="no-price">Not verified</span>';
+           return '<tr><td class="mono">' + escapeHtml(week) + '</td><th scope="row">' + escapeHtml(offer.product) + '</th><td>' + escapeHtml(offer.configuration) + '</td><td>' + escapeHtml(offer.channel) + '</td><td class="price price-cash">' + escapeHtml(formatPrice(offer.quote.price)) + '</td><td>' + pdp + '</td></tr>';
+         }).join("") || '<tr><td colspan="6"><div class="empty-state"><strong>No matching baseline prices</strong><p>Adjust the shared filters to see verified cash points.</p></div></td></tr>';
+       }
+
        function renderPriceList() {
          ["phone", "tablet"].forEach(function (device) {
            var rows = priceListRows(device);
@@ -16195,8 +16873,10 @@
              return '<tr><th scope="row">' + escapeHtml(offer.product) + '</th><td>' + escapeHtml(offer.configuration) + '</td><td>' + escapeHtml(offer.brand) + '</td><td>' + escapeHtml(offer.channel) + '</td><td class="price price-cash">' + escapeHtml(formatPrice(offer.quote.price)) + '</td><td>' + statusBadge(offer.status) + '</td><td>' + pdp + '</td></tr>';
            }).join("") || '<tr><td colspan="7"><div class="empty-state"><strong>No matching cash offers</strong><p>Adjust the shared filters to see available rows.</p></div></td></tr>';
          });
-         var unknownNames = Array.from(new Set(filteredOffers(true).filter(function (offer) { return networkType(offer) === "Unknown"; }).map(function (offer) { return offer.product; }))).sort(function (a, b) { return a.localeCompare(b); });
-         document.getElementById("unknown-network-note").innerHTML = "<strong>Unknown network classification:</strong> " + (unknownNames.length ? unknownNames.map(escapeHtml).join(", ") : "None in the current filtered results") + ". Network is not inferred when source facts do not explicitly identify 4G or 5G.";
+          var unknownNames = Array.from(new Set(filteredOffers(true).filter(function (offer) { return networkType(offer) === "Unknown"; }).map(function (offer) { return offer.product; }))).sort(function (a, b) { return a.localeCompare(b); });
+          var unknownNote = document.getElementById("unknown-network-note");
+          unknownNote.hidden = unknownNames.length === 0;
+          unknownNote.innerHTML = unknownNames.length ? "<strong>Unknown network classification:</strong> " + unknownNames.map(escapeHtml).join(", ") + ". User classifications are applied by exact Brand + Model." : "";
        }
 
        function downloadPriceList(device) {
@@ -16273,16 +16953,18 @@
           return '<tr class="' + rowClass + '"><th scope="row"><span class="product-name">' + escapeHtml(offer.product) + '</span><span class="product-meta">' + escapeHtml(offer.brand) + " · " + (offer.tier === "ours" ? "Our product" : "Competitor") + '</span></th><td class="configuration">' + escapeHtml(offer.configuration) + '</td><td>' + escapeHtml(offer.channel) + '</td><td>' + priceHtml(offer) + '</td><td>' + statusBadge(offer.status) + (offer.quote.availability_note ? '<span class="cell-note">' + escapeHtml(offer.quote.availability_note) + "</span>" : "") + '</td><td>' + detailHtml(offer.quote) + '</td><td>' + sourceHtml(offer) + "</td></tr>";
         }).join("") || '<tr><td colspan="7"><div class="empty-state"><div class="empty-state-marker" aria-hidden="true"></div><strong>No matching offer rows</strong><p>Reset the filters to restore the full ledger.</p></div></td></tr>';
         document.getElementById("filter-summary").textContent = "Showing " + rows.length.toLocaleString("en-US") + " of " + offers.length.toLocaleString("en-US") + " configured rows";
-         renderComparison();
-         renderPriceList();
+          renderComparison();
+          renderPriceList();
+          renderHistory();
       }
 
-      function populateFilters() {
-        var brands = Array.from(new Set(offers.map(function (offer) { return offer.brand; }))).sort();
-        var models = Array.from(new Set(offers.map(function (offer) { return offer.product; }))).sort(function (a, b) { return a.localeCompare(b); });
+       function populateFilters() {
+         var brands = Array.from(new Set(catalogProducts.map(function (product) { return product.brand || "Other"; }))).sort();
+         var models = Array.from(new Set(catalogProducts.map(function (product) { return product.model || "Unnamed product"; }))).sort(function (a, b) { return a.localeCompare(b); });
          renderCheckboxOptions("brand-options", brands, "brand");
          renderModelOptions(models);
-         renderCheckboxOptions("network-options", ["4G", "5G", "Unknown"], "network");
+         var availableNetworks = Array.from(new Set(offers.map(networkType).concat(catalogProducts.map(function (product) { return userNetworkClassification(product.brand, product.model); })))).filter(Boolean).sort(function (a, b) { return ["4G", "5G", "Wi-Fi", "Unknown"].indexOf(a) - ["4G", "5G", "Wi-Fi", "Unknown"].indexOf(b); });
+        renderCheckboxOptions("network-options", availableNetworks, "network");
         document.getElementById("channel-filter").insertAdjacentHTML("beforeend", channels.map(function (channel) { return '<option value="' + escapeHtml(channel) + '">' + escapeHtml(channel) + "</option>"; }).join(""));
         document.getElementById("status-filter").insertAdjacentHTML("beforeend", statusOrder.filter(function (status) { return offers.some(function (offer) { return offer.status === status; }); }).map(function (status) { return '<option value="' + status + '">' + escapeHtml(statusLabels[status]) + "</option>"; }).join(""));
       }
@@ -16312,9 +16994,9 @@
          document.getElementById("network-filter").textContent = networks.length ? networks.join(", ") : "All networks";
       }
 
-      function cascadeModels() {
-        var selectedBrands = filterValues().brands;
-        var models = Array.from(new Set(offers.filter(function (offer) { return !selectedBrands.length || selectedBrands.indexOf(offer.brand) !== -1; }).map(function (offer) { return offer.product; }))).sort(function (a, b) { return a.localeCompare(b); });
+       function cascadeModels() {
+         var selectedBrands = filterValues().brands;
+         var models = Array.from(new Set(catalogProducts.filter(function (product) { return !selectedBrands.length || selectedBrands.indexOf(product.brand || "Other") !== -1; }).map(function (product) { return product.model || "Unnamed product"; }))).sort(function (a, b) { return a.localeCompare(b); });
         renderModelOptions(models);
         refreshFilterLabels();
       }
@@ -16343,7 +17025,8 @@
          document.querySelectorAll("main.workspace > section[role=tabpanel]").forEach(function (panel) { panel.hidden = panel.id !== "panel-" + tabName; });
          document.getElementById("offer-filters").hidden = tabName !== "offers" && tabName !== "price-list";
          if (tabName === "offers") renderLedger();
-         if (tabName === "price-list") renderPriceList();
+          if (tabName === "price-list") renderPriceList();
+          if (tabName === "history") renderHistory();
        }
 
        function activatePriceDevice(device) {
@@ -16377,9 +17060,10 @@
       document.getElementById("last-updated").textContent = formatDate(snapshot.last_updated);
       document.getElementById("footer-date").textContent = formatDate(snapshot.last_updated);
       document.getElementById("nav-count").textContent = offers.length.toLocaleString("en-US") + " configured rows";
-      renderCoverage();
-      populateFilters();
-      renderLedger();
+       renderCoverage();
+       populateFilters();
+       renderLedger();
+       renderHistory();
 
       document.querySelectorAll(".view-nav [role=tab]").forEach(function (tab, index, allTabs) {
         tab.addEventListener("click", function () { activateTab(tab.dataset.tab); });
