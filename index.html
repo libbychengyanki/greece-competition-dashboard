@@ -345,7 +345,9 @@
       .reference-card-grid .reference-card { border-top: 2px solid var(--status-info); }
       .reference-card-label { display: block; margin-top: var(--space-2); color: var(--status-info); font-size: 12px; font-weight: 650; }
       .reference-card-empty { border: 1px dashed var(--paper-300); background: var(--paper-100); padding: var(--space-3); color: var(--text-muted); font-size: 12px; }
-      .price-list-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin: var(--space-4) 0 var(--space-3); }
+       .price-list-actions { display: flex; align-items: center; justify-content: space-between; gap: var(--space-4); margin: var(--space-4) 0 var(--space-3); }
+       .price-list-week-control { display: flex; align-items: center; gap: var(--space-2); color: var(--text-muted); font-size: 12px; }
+       .price-list-week-control select { min-width: 132px; border: 1px solid var(--paper-300); border-radius: var(--radius-panel); background: var(--paper-100); color: var(--text-ink); padding: var(--space-2) var(--space-3); }
      .price-list-tabs { display: flex; gap: var(--space-1); border-bottom: 1px solid var(--paper-300); }
       .price-list-table { width: 100%; min-width: 940px; table-layout: fixed; border-collapse: collapse; }
       .price-list-table col.product-col { width: 19%; }
@@ -359,8 +361,8 @@
        .price-list-table th:last-child, .price-list-table td:last-child { border-right: 0; }
      .price-list-table th { background: var(--paper-200); color: var(--text-muted); font-size: 12px; text-transform: uppercase; }
      .price-list-table td:first-child { font-weight: 650; }
-      .price-list-table th:nth-child(5), .price-list-table td:nth-child(5) { text-align: left; vertical-align: middle; }
-      .price-list-table td:nth-child(5) .price { display: block; margin: 0; text-align: left; line-height: 1.5; }
+        .price-list-table th:nth-child(5), .price-list-table td:nth-child(5) { text-align: right; vertical-align: middle; }
+        .price-list-table td:nth-child(5) .price { display: inline-block; margin: 0; text-align: right; line-height: 1.5; }
        .price-list-network-note { margin: var(--space-4) 0; border-left: 2px solid var(--status-info); background: var(--paper-200); padding: var(--space-3) var(--space-4); color: var(--text-muted); font-size: 14px; }
        .history-summary { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: var(--space-4); margin-bottom: var(--space-6); }
        .history-kpi { border: 1px solid var(--paper-300); border-radius: var(--radius-panel); background: var(--paper-100); padding: var(--space-4); }
@@ -382,7 +384,12 @@
        .history-chart .chart-axis { stroke: var(--text-muted); stroke-width: 1; }
          .history-chart .chart-line { fill: none; stroke: var(--accent-action); stroke-linecap: round; stroke-linejoin: round; stroke-width: 2; }
          .history-chart .chart-point { fill: var(--paper-100); stroke: var(--accent-action); stroke-width: 2; }
-        .history-chart .chart-data-label { fill: var(--text-deep-muted); font-size: 9px; font-weight: 650; paint-order: stroke; stroke: var(--paper-100); stroke-linejoin: round; stroke-width: 3px; }
+          .history-chart .chart-hover-capture { fill: transparent; cursor: crosshair; pointer-events: all; }
+         .history-chart .chart-focus-line { stroke: var(--text-muted); stroke-dasharray: 3 4; stroke-width: 1; pointer-events: none; }
+         .history-chart-tooltip { position: absolute; z-index: 3; min-width: 190px; max-width: min(320px, calc(100% - 24px)); border: 1px solid var(--paper-300); border-radius: var(--radius-panel); background: var(--paper-100); padding: var(--space-3); box-shadow: 0 8px 20px rgba(29, 29, 31, 0.12); pointer-events: none; }
+         .history-chart-tooltip[hidden] { display: none; }
+         .history-chart-tooltip-title { color: var(--text-ink); font-size: 14px; font-weight: 650; }
+         .history-chart-tooltip-body { display: grid; gap: var(--space-1); margin-top: var(--space-2); color: var(--text-muted); font-size: 12px; line-height: 1.35; }
         .history-chart-empty { min-height: 260px; display: grid; place-items: center; border: 1px dashed var(--paper-300); color: var(--text-muted); text-align: center; }
         .history-legend { display: flex; flex-wrap: wrap; gap: var(--space-2) var(--space-4); margin-top: var(--space-3); color: var(--text-muted); font-size: 12px; }
         .history-legend-item { display: inline-flex; align-items: center; gap: var(--space-2); max-width: 100%; }
@@ -425,7 +432,14 @@
      .family-table .price { text-align: right; }
        .family-table td:nth-child(9), .family-table td:nth-child(10), .family-table td:nth-child(11) { vertical-align: middle; }
        .family-table td:nth-child(9) .price, .family-table td:nth-child(10) .price { display: inline-flex; align-items: center; min-height: 1.5em; }
-        .family-table td:nth-child(11) .family-basis { display: inline-block; line-height: 1.35; vertical-align: middle; }
+         .family-table td:nth-child(11) .family-basis { display: inline-block; line-height: 1.35; vertical-align: middle; }
+         .family-table th:nth-child(-n+4), .family-table td:nth-child(-n+4) { background: rgba(255, 105, 0, 0.1); }
+         .family-table th:nth-child(-n+4) { color: #a84700; }
+         .family-table th:nth-child(1), .family-table td:nth-child(1), .family-table th:nth-child(5), .family-table td:nth-child(5), .family-table th:nth-child(9), .family-table td:nth-child(9) { border-left: 2px solid var(--paper-300); }
+         .family-table th:nth-child(n+5):nth-child(-n+8), .family-table td:nth-child(n+5):nth-child(-n+8) { background: rgba(0, 113, 227, 0.1); }
+         .family-table th:nth-child(n+5):nth-child(-n+8) { color: #005bb5; }
+         .family-table th:nth-child(n+9):nth-child(-n+11), .family-table td:nth-child(n+9):nth-child(-n+11) { background: rgba(110, 110, 115, 0.11); }
+         .family-table th:nth-child(n+9):nth-child(-n+11) { color: var(--text-deep-muted); }
         .brand-gap-selected-controls { display: grid; grid-template-columns: repeat(2, minmax(220px, 1fr)); gap: var(--space-3); margin: var(--space-4); border: 1px solid var(--paper-300); background: var(--paper-200); padding: var(--space-4); }
          .brand-gap-selected-results { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: var(--space-4); width: 100%; max-width: 100%; min-width: 0; margin: 0 var(--space-4) var(--space-4); }
         .brand-gap-selected-results > section { min-width: 0; }
@@ -540,7 +554,7 @@
         <div class="field"><label for="network-filter">Network</label><details class="filter-menu" id="network-menu"><summary id="network-filter" aria-haspopup="listbox">All networks</summary><div class="filter-options" id="network-options"></div></details></div>
         <div class="field"><label for="channel-filter">Channel</label><select id="channel-filter"><option value="">All channels</option></select></div>
         <div class="field"><label for="status-filter">Status</label><select id="status-filter"><option value="">All statuses</option></select></div>
-        <div class="field"><label for="price-min">Minimum price (EUR)</label><input id="price-min" type="number" min="0" step="0.01" placeholder="No minimum" inputmode="decimal" aria-describedby="price-error" aria-invalid="false"><span class="field-error" id="price-error" role="alert"></span></div>
+         <div class="field"><label for="price-min">Minimum price (EUR)</label><input id="price-min" type="number" min="0" step="0.01" placeholder="No minimum" inputmode="decimal" aria-describedby="price-error" aria-invalid="false"><output class="field-error" id="price-error" aria-live="assertive"></output></div>
         <div class="field"><label for="price-max">Maximum price (EUR)</label><input id="price-max" type="number" min="0" step="0.01" placeholder="No maximum" inputmode="decimal" aria-describedby="price-error" aria-invalid="false"></div>
         <div class="actions"><button class="button" id="reset-filters" type="button">Reset</button><button class="button button-primary" id="export-csv" type="button">Export CSV</button></div>
       </form>
@@ -580,7 +594,7 @@
       </section>
 
       <section id="panel-price-list" role="tabpanel" aria-labelledby="tab-price-list" hidden>
-        <div class="section-heading"><div><p class="section-kicker">Active standalone cash offers</p><h2>Price List</h2></div><p class="section-note">Rows without a standalone cash price are excluded.</p></div>
+         <div class="section-heading"><div><p class="section-kicker">Weekly standalone cash offers</p><h2>Price List</h2></div><div class="price-list-week-control"><label for="price-list-week">Snapshot week</label><select id="price-list-week" aria-label="Price List snapshot week"></select></div></div>
         <div class="price-list-tabs" role="tablist" aria-label="Price List device type">
           <button class="device-tab" id="price-tab-phones" type="button" role="tab" aria-selected="true" aria-controls="price-panel-phones" data-price-device="phone">Phone Price List</button>
           <button class="device-tab" id="price-tab-tablets" type="button" role="tab" aria-selected="false" aria-controls="price-panel-tablets" data-price-device="tablet">Tablet Price List</button>
@@ -602,10 +616,13 @@
               <div class="field"><label for="history-product-search">Products</label><input id="history-product-search" type="search" placeholder="Type to narrow products" autocomplete="off" aria-controls="history-product-options"><div id="history-product-options" class="history-product-options" role="group" aria-label="History products"></div><span class="field-help" id="history-product-help">Type to narrow candidates, then select one or more products.</span></div>
              <div class="field"><label for="history-device-filter">Device</label><select id="history-device-filter"><option value="">All devices</option><option value="phone">Smartphone</option><option value="tablet">Pad</option></select><span class="field-help">Filter products by device type.</span></div>
               <div class="field"><label for="history-brand-filter">Brands</label><details class="filter-menu"><summary id="history-brand-filter" aria-haspopup="listbox">All brands</summary><div class="filter-options" id="history-brand-filter-options"></div></details><span class="field-help" id="history-brand-help">Display groups follow the dashboard brand labels.</span></div>
-             <div class="field"><label for="history-band-filter">Price bands</label><details class="filter-menu"><summary id="history-band-filter" aria-haspopup="listbox">All price bands</summary><div class="filter-options" id="history-band-filter-options"></div></details><span class="field-help" id="history-band-help">Range prices remain visible in the table but never create chart lines.</span></div>
-              <div class="field"><label for="history-time-range">Time range</label><select id="history-time-range"><option value="all">All history</option><option value="4">Recent 4 weeks</option><option value="12">Recent 12 weeks</option><option value="26">Recent 26 weeks</option><option value="52">Recent 52 weeks</option></select><span class="field-help">Uses the latest explicit snapshot weeks only.</span></div>
-              <div class="filter-actions"><button class="button" id="history-reset" type="button">Reset history filters</button></div>
-          </fieldset>
+              <div class="field"><label for="history-band-filter">Price bands</label><details class="filter-menu"><summary id="history-band-filter" aria-haspopup="listbox">All price bands</summary><div class="filter-options" id="history-band-filter-options"></div></details><span class="field-help" id="history-band-help">Range prices remain visible in the table but never create chart lines.</span></div>
+              <div class="field"><label for="history-channel-filter">Channel</label><select id="history-channel-filter"><option value="">All channels</option></select><span class="field-help">Select one channel or aggregate the lowest active numeric row.</span></div>
+               <div class="field"><label for="history-time-range">Time range</label><select id="history-time-range"><option value="all">All history</option><option value="4">Recent 4 weeks</option><option value="12">Recent 12 weeks</option><option value="26">Recent 26 weeks</option><option value="52">Recent 52 weeks</option></select><span class="field-help">Uses the latest explicit snapshot weeks only.</span></div>
+              <div class="field"><label for="history-start-week">Start week</label><select id="history-start-week"><option value="">No start bound</option></select></div>
+              <div class="field"><label for="history-end-week">End week</label><select id="history-end-week"><option value="">No end bound</option></select></div>
+           </fieldset>
+           <div class="filter-actions history-filter-actions"><button class="button" id="history-reset" type="button">Reset history filters</button><output class="field-error" id="history-range-error" aria-live="assertive"></output></div>
           <div class="history-summary" id="history-summary"></div>
           <section class="history-chart-panel" aria-labelledby="history-chart-title">
             <div class="panel-title"><p class="section-kicker">Trend chart</p><h3 id="history-chart-title">EUR cash price by verified snapshot</h3></div>
@@ -624,6 +641,7 @@
              <fieldset class="family-controls"><legend class="sr-only">Brand gap comparison filters</legend>
                 <div class="field"><label for="family-band-filter">Price bands</label><details class="filter-menu"><summary id="family-band-filter" aria-haspopup="listbox">All price bands</summary><div class="filter-options" id="family-band-filter-options"></div></details><span class="field-help" id="family-band-help">Select one or more bands. All price bands means no restriction.</span></div>
                  <div class="field"><label for="family-competing-brand-filter">Competing brand</label><details class="filter-menu"><summary id="family-competing-brand-filter" aria-haspopup="listbox">All Brand</summary><div class="filter-options" id="family-competing-brand-filter-options"></div></details><span class="field-help">Filters the competing side only. All Brand removes the brand restriction.</span></div>
+                <div class="field"><label for="family-series-filter">Brand Gap series</label><details class="filter-menu"><summary id="family-series-filter" aria-haspopup="listbox">All series</summary><div class="filter-options" id="family-series-filter-options"></div></details><span class="field-help">Filters the Xiaomi-family baseline only.</span></div>
                 <div class="field"><span class="field-help"><strong>Comparison basis / 比较依据</strong><br>Active numeric alternatives are compared within the same device and price band. Exact RAM/ROM matches are preferred when available, but are not required; non-exact matches are labeled <em>Price band</em>. Missing, unresolved, sold-out, unavailable, not-found, and range-price data is excluded.</span></div>
               </fieldset>
                <div class="filter-actions"><button class="button" id="family-reset" type="button">Reset filters</button></div>
@@ -648,7 +666,7 @@
   </div>
   <script id="prices-json" type="application/json">
 {
-  "last_updated": "2026-10-26",
+  "last_updated": "2026-10-30",
   "exchange_rates": {},
   "refresh_exclusions": [
     "Redmi Note 15",
@@ -16616,8 +16634,7 @@
           "|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/apple-iphone-17-pro-512gb-5g-deep-blue_4902939",
           "|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/327899-apple-iphone-17-pro-256gb-silver",
           "|256GB|Cosmote": "https://www.germanos.gr/product/item/apple-iphone-17-pro-dual-5g-256gb?productId=20442995",
-          "|512GB|Cosmote": "https://www.germanos.gr/product/item/apple-iphone-17-pro-dual-5g-512gb?productId=20442998",
-          "|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-17-pro/pd-01K4VVJHQ70T5X0WP5PQG108J9?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112126002"
+          "|512GB|Cosmote": "https://www.germanos.gr/product/item/apple-iphone-17-pro-dual-5g-512gb?productId=20442998"
         }
       },
       "source_urls": {},
@@ -16664,13 +16681,14 @@
                 "source_url": "https://www.germanos.gr/product/item/apple-iphone-17-pro-dual-5g-256gb?productId=20442995"
               },
               "Vodafone": {
-                "price": 1239,
+                "price": null,
                 "bundle_price": null,
                 "bundle_condition": null,
-                "status": "active",
+                "status": "pending",
                 "gift": null,
                 "gift_condition": null,
-                "source_url": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-17-pro/pd-01K4VVJHQ70T5X0WP5PQG108J9?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112126002"
+                "source_url": null,
+                "note": "Current Vodafone PDP exposes 512GB and 1TB variants; no exact 256GB variant was found, and the prior URL redirected to 512GB."
               },
               "Skroutz": {
                 "price": null,
@@ -24896,6 +24914,14 @@
         "Greece": {
           "|256GB|Cosmote": "https://www.germanos.gr/product/telephony/mobile/smartphones-all/apple-iphone-duo-dual-5g-256gb/?productId=20450593",
           "|512GB|Cosmote": "https://www.germanos.gr/product/telephony/mobile/smartphones-all/apple-iphone-duo-dual-5g-512gb/?productId=20450595",
+          "|256GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/341163-apple-iphone-duo-256gb-night-sky",
+          "|512GB|kotsovolos": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/341165-apple-iphone-duo-512gb-night-sky",
+          "|256GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/apple-iphone-duo-256gb-5g-night-sky_5347335",
+          "|512GB|Plaisio": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/apple-iphone-duo-512gb-5g-night-sky_5347351",
+          "|256GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-duo-5g/pd-01M3C11HJ7PGD61NT4HDEE15W6?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112131001",
+          "|512GB|Vodafone": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-duo-5g/pd-01M3C11HJ7PGD61NT4HDEE15W6?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112131005",
+          "|256GB|Skroutz": "https://www.skroutz.gr/s/69211876/apple-iphone-duo-12-256gb-night-sky.html",
+          "|512GB|Skroutz": "https://www.skroutz.gr/s/69318192/apple-iphone-duo-12-512gb-star-white.html",
           "|256GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/apple-iphone-duo-256gb--night-sky/2156395",
           "|512GB|Public": "https://www.public.gr/product/tilefonia/kinita-smartphones/apple-iphone-duo-512gb--night-sky/2156405"
         }
@@ -24908,16 +24934,46 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 2399.0,
+                "status": "active",
                 "source_url": "https://www.germanos.gr/product/telephony/mobile/smartphones-all/apple-iphone-duo-dual-5g-256gb/?productId=20450593",
-                "note": "Preorder listing; price held pending confirmation of orderability."
+                "note": "Direct Germanos PDP verified: EUR cash price 2399.00; available."
               },
               "Public": {
                 "price": null,
                 "status": "pending",
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/apple-iphone-duo-256gb--night-sky/2156395",
                 "note": "Preorder listing; price held pending confirmation of orderability."
+              },
+              "kotsovolos": {
+                "price": 2399.99,
+                "status": "active",
+                "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/341163-apple-iphone-duo-256gb-night-sky",
+                "availability_note": "Διαθέσιμο κατόπιν παραγγελίας",
+                "note": "Exact Kotsovolos PDP verified: EUR cash price 2399.99."
+              },
+              "Plaisio": {
+                "price": 2399.0,
+                "status": "active",
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/apple-iphone-duo-256gb-5g-night-sky_5347335",
+                "availability_note": "Κατόπιν Παραγγελίας",
+                "note": "Exact Plaisio PDP verified: EUR cash price 2399.00."
+              },
+              "Vodafone": {
+                "price": 2399.0,
+                "status": "unavailable",
+                "source_url": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-duo-5g/pd-01M3C11HJ7PGD61NT4HDEE15W6?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112131001",
+                "availability_note": "Μη διαθέσιμο",
+                "note": "Exact Vodafone PDP verified: EUR cash price 2399.00; selected 256GB variant unavailable."
+              },
+              "Skroutz": {
+                "price": 2398.89,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "status": "active",
+                "source_url": "https://www.skroutz.gr/s/69211876/apple-iphone-duo-12-256gb-night-sky.html",
+                "note": "Exact Skroutz reference PDP verified: lowest visible EUR cash price 2398.89.",
+                "reference_quotes": [{"price": 2398.89, "source_url": "https://www.skroutz.gr/s/69211876/apple-iphone-duo-12-256gb-night-sky.html", "status": "active", "observed_at": "2026-10-30T14:24:00+00:00", "evidence": "Exact PDP identity and lowest visible EUR cash price backed by a same-page schema.org EUR Offer."}]
               }
             }
           }
@@ -24928,16 +24984,45 @@
           "prices": {
             "Greece": {
               "Cosmote": {
-                "price": null,
-                "status": "pending",
+                "price": 2649.0,
+                "status": "active",
                 "source_url": "https://www.germanos.gr/product/telephony/mobile/smartphones-all/apple-iphone-duo-dual-5g-512gb/?productId=20450595",
-                "note": "Preorder listing; price held pending confirmation of orderability."
+                "note": "Direct Germanos PDP verified: EUR cash price 2649.00; available."
               },
               "Public": {
                 "price": null,
                 "status": "pending",
                 "source_url": "https://www.public.gr/product/tilefonia/kinita-smartphones/apple-iphone-duo-512gb--night-sky/2156405",
                 "note": "Preorder listing; price held pending confirmation of orderability."
+              },
+              "kotsovolos": {
+                "price": 2649.99,
+                "status": "active",
+                "source_url": "https://www.kotsovolos.gr/mobile-phones-gps/mobile-phones/smartphones/341165-apple-iphone-duo-512gb-night-sky",
+                "availability_note": "Διαθέσιμο κατόπιν παραγγελίας",
+                "note": "Exact Kotsovolos PDP verified: EUR cash price 2649.99."
+              },
+              "Plaisio": {
+                "price": 2649.0,
+                "status": "active",
+                "source_url": "https://www.plaisio.gr/product/tilefonia-tablet-wearables/tilefona/smartphones/apple-iphone-duo-512gb-5g-night-sky_5347351",
+                "availability_note": "Κατόπιν Παραγγελίας",
+                "note": "Exact Plaisio PDP verified: EUR cash price 2649.00."
+              },
+              "Vodafone": {
+                "price": null,
+                "status": "pending",
+                "source_url": "https://www.vodafone.gr/eshop/syskeues-axesouar/smartphones-axesouar/smartphones/iphone-duo-5g/pd-01M3C11HJ7PGD61NT4HDEE15W6?categoryId=pl-01FXSE01YNHK1R17QQHE281P56&skuId=000001141112131005",
+                "note": "Exact Vodafone PDP confirms 512GB identity, but no qualifying visible EUR cash price was exposed; remains pending."
+              },
+              "Skroutz": {
+                "price": 2648.89,
+                "bundle_price": null,
+                "bundle_condition": null,
+                "status": "active",
+                "source_url": "https://www.skroutz.gr/s/69318192/apple-iphone-duo-12-512gb-star-white.html",
+                "note": "Exact Skroutz reference PDP verified: lowest visible EUR cash price 2648.89.",
+                "reference_quotes": [{"price": 2648.89, "source_url": "https://www.skroutz.gr/s/69318192/apple-iphone-duo-12-512gb-star-white.html", "status": "active", "observed_at": "2026-10-30T14:24:00+00:00", "evidence": "Exact PDP identity and lowest visible EUR cash price backed by a same-page schema.org EUR Offer."}]
               }
             }
           }
@@ -25536,9 +25621,18 @@
       }
 
       function formatPrice(value) {
-        if (typeof value !== "number" || !Number.isFinite(value)) return "";
-        return "EUR " + value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
-      }
+         if (typeof value !== "number" || !Number.isFinite(value)) return "";
+         return "EUR " + value.toLocaleString("en-US", { minimumFractionDigits: 2, maximumFractionDigits: 2 });
+       }
+
+       function formatTooltipPrice(value) {
+         if (typeof value !== "number" || !Number.isFinite(value)) return "";
+         return "€" + value.toLocaleString("en-US", { maximumFractionDigits: 2 });
+       }
+
+       function formatTooltipWeek(week) {
+         return String(week || "").replace("-", "");
+       }
 
       function formatConfig(spec) {
         return [spec.ram, spec.storage].filter(Boolean).join(" + ") || "Configuration not specified";
@@ -25632,10 +25726,21 @@
         return String(brand || "") + "\u0000" + String(model || "");
       }
 
-      function userNetworkClassification(brand, model) {
-        var brandMap = USER_NETWORK_CLASSIFICATIONS[brand];
-        return brandMap ? brandMap[model] || "" : "";
-      }
+       function userNetworkClassification(brand, model) {
+         var brandMap = USER_NETWORK_CLASSIFICATIONS[brand];
+         return brandMap ? brandMap[model] || "" : "";
+       }
+
+       function canonicalBrandGapSeries(product) {
+         var rawSeries = String(product && product.series || "").trim();
+         var model = String(product && product.model || "").trim();
+         var brand = String(product && product.brand || "").trim();
+         if (/poco/i.test(rawSeries) || /^poco\b/i.test(model) || /^poco$/i.test(brand)) return "POCO";
+         if (/redmi\s*note/i.test(rawSeries) || /^redmi\s+note\b/i.test(model)) return "REDMI Note";
+         if (/mi高端|xiaomi/i.test(rawSeries) || /^xiaomi\b/i.test(model) || /^xiaomi$/i.test(brand)) return "XIAOMI";
+         if (/redmi\s*数字|^redmi$/i.test(rawSeries) || /^redmi\b/i.test(model) || /^redmi$/i.test(brand)) return "REDMI";
+         return "";
+       }
 
       snapshot.products.forEach(function (product) {
         (product.specs || []).forEach(function (spec) {
@@ -25645,9 +25750,11 @@
              var referenceOnly = isReferenceOnlyChannel(channel);
              var displayQuote = referenceOnly ? referenceAggregateQuote(quote, channel) : quote;
              offers.push({
-              product: product.model || "Unnamed product",
-                brand: product.brand || "Other",
-                classificationKey: classificationKey(product.brand, product.model),
+               product: product.model || "Unnamed product",
+                 brand: product.brand || "Other",
+                 series: product.series || "",
+                 familySeries: canonicalBrandGapSeries(product),
+                 classificationKey: classificationKey(product.brand, product.model),
                tier: product.tier || "competitor",
                configuration: formatConfig(spec),
                configKey: configKey(spec),
@@ -25952,13 +26059,56 @@
         });
        }
 
-       function priceListRows(device) {
-         return filteredOffers().filter(function (offer) {
-           return deviceType(offer) === device && offer.status === "active" && typeof offer.quote.price === "number" && Number.isFinite(offer.quote.price) && Boolean(offer.source);
-          }).sort(function (a, b) {
-            return Number(isReferenceOnlyOffer(a)) - Number(isReferenceOnlyOffer(b)) || a.quote.price - b.quote.price || a.product.localeCompare(b.product) || a.configuration.localeCompare(b.configuration) || a.channel.localeCompare(b.channel);
+        function priceListWeeks() {
+          return Array.from(new Set(PRICE_HISTORY.map(function (record) { return record.week; }).filter(Boolean))).sort();
+        }
+
+        function selectedPriceListWeek() {
+          var select = document.getElementById("price-list-week");
+          return select ? select.value : "";
+        }
+
+        function populatePriceListWeeks() {
+          var select = document.getElementById("price-list-week");
+          if (!select) return;
+          var weeks = priceListWeeks();
+          var selected = weeks.indexOf(select.value) !== -1 ? select.value : weeks.slice(-1)[0] || "";
+          select.innerHTML = weeks.map(function (week) { return '<option value="' + escapeHtml(week) + '">' + escapeHtml(week) + '</option>'; }).join("");
+          select.value = selected;
+        }
+
+        function historyPriceListRows(device, week) {
+          var filters = filterValues();
+          var invalidRange = filters.invalidMin || filters.invalidMax || (filters.min !== null && filters.max !== null && filters.min > filters.max);
+          if (!week || invalidRange) return [];
+          var rows = [];
+          PRICE_HISTORY.forEach(function (record) {
+            if (!record || record.week !== week) return;
+            var sourceRows = Array.isArray(record.offers) ? record.offers : [record];
+            sourceRows.forEach(function (row) {
+              if (!row || row.status !== "active" || row.reference_only === true || isReferenceOnlyChannel(row.channel) || typeof row.price !== "number" || !Number.isFinite(row.price)) return;
+              var configuration = row.configuration || [row.ram, row.storage].filter(Boolean).join(" + ") || "Configuration not specified";
+              var matchingOffer = offers.find(function (offer) {
+                return offer.product === (row.product || row.model) && offer.configuration === configuration && offer.channel === row.channel;
+              });
+              var product = row.product || row.model || "Unnamed product";
+              var brand = row.brand || (matchingOffer && matchingOffer.brand) || "Other";
+              var source = safeUrl(row.source_url, row.channel);
+              var historyOffer = matchingOffer || { product: product, brand: brand, configuration: configuration, channel: row.channel, source: source, quote: { price: row.price }, status: row.status };
+              var haystack = [product, brand, configuration, row.channel, row.status].join(" ").toLowerCase();
+              var price = row.price;
+              var matches = deviceType(historyOffer) === device && Boolean(source) && (!filters.search || haystack.indexOf(filters.search) !== -1) && (!filters.brands.length || filters.brands.indexOf(displayBrand({ brand: brand })) !== -1) && (!filters.models.length || filters.models.indexOf(product) !== -1) && (!filters.networks.length || filters.networks.indexOf(networkType(historyOffer)) !== -1) && (!filters.channel || row.channel === filters.channel) && (!filters.status || filters.status === "active") && (filters.min === null || price >= filters.min) && (filters.max === null || price <= filters.max);
+              if (matches) rows.push({ product: product, configuration: configuration, brand: brand, channel: row.channel, source: source, status: row.status, quote: { price: price } });
+            });
           });
-       }
+          return rows.sort(function (a, b) {
+            return a.quote.price - b.quote.price || a.product.localeCompare(b.product) || a.configuration.localeCompare(b.configuration) || a.channel.localeCompare(b.channel);
+          });
+        }
+
+        function priceListRows(device) {
+          return historyPriceListRows(device, selectedPriceListWeek());
+        }
 
         function isRangePrice(value) {
           return Array.isArray(value) && value.length === 2 && value.every(function (part) { return typeof part === "number" && Number.isFinite(part); });
@@ -26021,39 +26171,64 @@
             return historyDeviceMatches(offer) && (!products.length || products.indexOf(offer.product) !== -1) && (!brands.length || brands.indexOf(displayBrand(offer)) !== -1) && (!bands.length || bands.indexOf(historyBandLabel(offer)) !== -1);
          }
 
-          function explicitHistoryRows() {
-            var rows = [];
-            var weeks;
-            var recentWeeks;
-            PRICE_HISTORY.forEach(function (record) {
-             var week = record.week;
-              var sourceRows = Array.isArray(record.offers) ? record.offers : [record];
-              sourceRows.forEach(function (row) {
-                if (!row || !week || row.status && row.status !== "active" || row.reference_only === true || isReferenceOnlyChannel(row.channel)) return;
-               var price = row.price != null ? row.price : row.quote && row.quote.price;
-               var matchingOffer = offers.find(function (offer) {
-                 return offer.product === row.model && offer.configKey === [row.ram, row.storage].join("|") && offer.channel === row.channel;
-               });
-                var normalized = {
-                  week: week,
-                  product: row.product || row.model || "Unnamed product",
-                 brand: row.brand || (matchingOffer && matchingOffer.brand) || "Other",
-                 configuration: row.configuration || [row.ram, row.storage].filter(Boolean).join(" + ") || "Configuration not specified",
-                 channel: row.channel || "Unknown channel",
-                 price: price,
-                  source: safeUrl(row.source_url || row.source || (matchingOffer && matchingOffer.source) || "", row.channel)
-                };
-                rows.push(normalized);
-             });
-           });
-            var timeRange = document.getElementById("history-time-range").value;
-            if (timeRange !== "all") {
-              weeks = Array.from(new Set(rows.map(function (row) { return row.week; }))).sort();
-              recentWeeks = weeks.slice(-Number(timeRange));
-             rows = rows.filter(function (row) { return recentWeeks.indexOf(row.week) !== -1; });
-           }
-            return rows;
+          function historyRangeState() {
+            var start = document.getElementById("history-start-week").value;
+            var end = document.getElementById("history-end-week").value;
+            return { start: start, end: end, invalid: Boolean(start && end && start > end) };
           }
+
+           function explicitHistoryRows() {
+             var rows = [];
+             var weeks;
+             var recentWeeks;
+             var timeRange;
+             var channel = document.getElementById("history-channel-filter").value;
+             var range = historyRangeState();
+             PRICE_HISTORY.forEach(function (record) {
+              var week = record.week;
+               var sourceRows = Array.isArray(record.offers) ? record.offers : [record];
+               sourceRows.forEach(function (row) {
+                 if (!row || !week || row.status && row.status !== "active" || row.reference_only === true || isReferenceOnlyChannel(row.channel) || (channel && row.channel !== channel)) return;
+                var price = row.price != null ? row.price : row.quote && row.quote.price;
+                if (!(typeof price === "number" && Number.isFinite(price)) && !isRangePrice(price)) return;
+                var matchingOffer = offers.find(function (offer) {
+                  return offer.product === row.model && offer.configKey === [row.ram, row.storage].join("|") && offer.channel === row.channel;
+                });
+                 rows.push({
+                   week: week,
+                   product: row.product || row.model || "Unnamed product",
+                  brand: row.brand || (matchingOffer && matchingOffer.brand) || "Other",
+                  configuration: row.configuration || [row.ram, row.storage].filter(Boolean).join(" + ") || "Configuration not specified",
+                  channel: row.channel || "Unknown channel",
+                  price: price,
+                  source: safeUrl(row.source_url, row.channel)
+                 });
+              });
+            });
+             if (range.start || range.end) {
+               rows = rows.filter(function (row) { return (!range.start || row.week >= range.start) && (!range.end || row.week <= range.end); });
+            } else {
+               timeRange = document.getElementById("history-time-range").value;
+              if (timeRange !== "all") {
+                weeks = Array.from(new Set(rows.map(function (row) { return row.week; }))).sort();
+                recentWeeks = weeks.slice(-Number(timeRange));
+                rows = rows.filter(function (row) { return recentWeeks.indexOf(row.week) !== -1; });
+               }
+             }
+             rows = rows.filter(historyMatchesLocalFilters);
+             if (channel) return rows;
+            var numericRows = {};
+            var tableOnlyRows = [];
+            rows.forEach(function (row) {
+              if (typeof row.price !== "number" || !Number.isFinite(row.price)) {
+                tableOnlyRows.push(row);
+                return;
+              }
+              var key = [row.product, row.configuration, row.week].join("\u0000");
+              if (!numericRows[key] || row.price < numericRows[key].price) numericRows[key] = row;
+            });
+            return Object.keys(numericRows).map(function (key) { return numericRows[key]; }).concat(tableOnlyRows);
+           }
 
         function historyTableRow(row, explicit) {
           var isRange = isRangePrice(row.price);
@@ -26064,8 +26239,8 @@
         }
 
         function renderHistoryChart(rows) {
-           var hasProductOrBrandSelection = selectedHistoryProducts().length || selectedValues("history-brand-filter").length;
-           if (!hasProductOrBrandSelection) return '<div class="history-chart-empty"><div><strong>Select at least one product or brand</strong><p>Price-band filters keep table context only and do not activate the trend chart.</p></div></div>';
+           var hasTrendSelection = selectedHistoryProducts().length || selectedValues("history-brand-filter").length || selectedValues("history-band-filter").length;
+           if (!hasTrendSelection) return '<div class="history-chart-empty"><div><strong>Select at least one product, brand, or price band</strong><p>Choose a product, brand, or price band to activate the trend chart.</p></div></div>';
             var numericRows = rows.filter(function (row) { return typeof row.price === "number" && Number.isFinite(row.price); });
             if (!numericRows.length) return '<div class="history-chart-empty"><div><strong>No verified weekly snapshots for this selection</strong><p>Import an explicit reviewed EUR cash snapshot to see product-by-week history. Range prices remain table-only.</p></div></div>';
           var weeks = Array.from(new Set(numericRows.map(function (row) { return row.week; }))).sort();
@@ -26097,7 +26272,10 @@
             var value = max - ratio * (max - min);
             return '<line class="chart-grid" x1="' + left + '" y1="' + y.toFixed(1) + '" x2="' + (width - right) + '" y2="' + y.toFixed(1) + '"></line><text x="' + (left - 8) + '" y="' + (y + 4).toFixed(1) + '" text-anchor="end">' + escapeHtml(formatPrice(value)) + '</text>';
           }).join("");
-          var xLabels = weeks.map(function (week) { return '<text x="' + xFor(week).toFixed(1) + '" y="' + (height - 16) + '" text-anchor="middle">' + escapeHtml(week) + '</text>'; }).join("");
+           var xLabels = weeks.map(function (week, index) {
+             var anchor = index === weeks.length - 1 ? "end" : index === 0 ? "start" : "middle";
+             return '<text x="' + xFor(week).toFixed(1) + '" y="' + (height - 16) + '" text-anchor="' + anchor + '">' + escapeHtml(week) + '</text>';
+           }).join("");
            var dashPatterns = ["", "7 4", "2 4", "11 4 2 4", "5 3 1 3", "14 4"];
            var geometry = seriesList.map(function (item, seriesIndex) {
              var color = brandColor(displayBrand({ brand: item.brand }));
@@ -26111,20 +26289,91 @@
               if (!point) { path += " "; return; }
               var command = index > 0 && byWeek[weeks[index - 1]] ? "L" : "M";
               path += command + xFor(week).toFixed(1) + " " + yFor(point.price).toFixed(1) + " ";
-                var tooltip = item.label + " · " + week + " · " + formatPrice(point.price);
-                var labelText = item.product + " · " + formatPrice(point.price);
+               var tooltip = item.label + " · " + week + " · " + formatTooltipPrice(point.price);
                 var pointX = xFor(week);
                 var pointY = yFor(point.price);
-                var labelOnLeft = pointX > width - 180;
-                var labelX = labelOnLeft ? pointX - 8 : pointX + 8;
-                var labelAnchor = labelOnLeft ? "end" : "start";
-                points.push('<g><circle class="chart-point" tabindex="0" role="img" aria-label="' + escapeHtml(tooltip) + '" cx="' + pointX.toFixed(1) + '" cy="' + pointY.toFixed(1) + '" r="4"><title>' + escapeHtml(tooltip) + '</title></circle><text class="chart-data-label" x="' + labelX.toFixed(1) + '" y="' + Math.max(14, pointY - 8).toFixed(1) + '" text-anchor="' + labelAnchor + '">' + escapeHtml(labelText) + '</text></g>');
+                 points.push('<g><circle tabindex="0" role="img" aria-label="' + escapeHtml(tooltip) + '" class="chart-point" data-week="' + escapeHtml(week) + '" data-series-index="' + seriesIndex + '" cx="' + pointX.toFixed(1) + '" cy="' + pointY.toFixed(1) + '" r="4"></circle></g>');
             });
              return (item.points.length > 1 && path.trim() ? '<path class="chart-line" style="stroke:' + color + ';' + (dash ? 'stroke-dasharray:' + dash + ';' : '') + '" d="' + path.trim() + '" aria-hidden="true"></path>' : "") + points.map(function (point) { return point.replace('class="chart-point"', 'class="chart-point" style="stroke:' + color + '"'); }).join("");
            }).join("");
             var legend = '<div class="history-legend" aria-label="Chart series legend">' + seriesList.map(function (item, seriesIndex) { var color = brandColor(displayBrand({ brand: item.brand })); var dash = dashPatterns[seriesIndex % dashPatterns.length]; return '<span class="history-legend-item"><span class="history-legend-swatch" style="border-top:3px ' + (dash ? 'dashed' : 'solid') + ' ' + color + ';" aria-hidden="true"></span><span>' + escapeHtml(item.label) + '</span></span>'; }).join("") + '</div>';
-           return '<svg class="history-chart" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-labelledby="history-chart-title history-chart-description"><desc id="history-chart-description">Verified EUR cash prices across ' + escapeHtml(weeks.join(", ")) + '. Missing weeks remain disconnected.</desc><line class="chart-axis" x1="' + left + '" y1="' + top + '" x2="' + left + '" y2="' + (height - bottom) + '"></line><line class="chart-axis" x1="' + left + '" y1="' + (height - bottom) + '" x2="' + (width - right) + '" y2="' + (height - bottom) + '"></line>' + grid + geometry + xLabels + '</svg>' + legend;
-        }
+            return '<div class="history-chart-stage" style="position:relative"><svg class="history-chart" viewBox="0 0 ' + width + ' ' + height + '" role="img" aria-labelledby="history-chart-title history-chart-description"><desc id="history-chart-description">Verified EUR cash prices across ' + escapeHtml(weeks.join(", ")) + '. Missing weeks remain disconnected. Move across the plot to inspect the nearest week.</desc><line class="chart-axis" x1="' + left + '" y1="' + top + '" x2="' + left + '" y2="' + (height - bottom) + '"></line><line class="chart-axis" x1="' + left + '" y1="' + (height - bottom) + '" x2="' + (width - right) + '" y2="' + (height - bottom) + '"></line><line class="chart-focus-line" id="history-chart-focus-line" x1="' + left + '" y1="' + top + '" x2="' + left + '" y2="' + (height - bottom) + '" display="none"></line><rect class="chart-hover-capture" x="' + left + '" y="' + top + '" width="' + plotWidth + '" height="' + plotHeight + '" aria-hidden="true"></rect>' + grid + geometry + xLabels + '</svg><div class="history-chart-tooltip" id="history-chart-tooltip" role="status" aria-live="polite" hidden><div class="history-chart-tooltip-title"></div><div class="history-chart-tooltip-body"></div></div></div>' + legend;
+         }
+
+          function bindHistoryChartTooltip(weeks, seriesList, width, left, plotWidth) {
+            var host = document.getElementById("history-chart");
+            var svg = host.querySelector(".history-chart");
+            var capture = host.querySelector(".chart-hover-capture");
+            var tooltip = host.querySelector(".history-chart-tooltip");
+            var focusLine = host.querySelector(".chart-focus-line");
+            if (!svg || !capture || !tooltip) return;
+            function nearestWeek(clientX) {
+              var rect = svg.getBoundingClientRect();
+              var plotX = ((clientX - rect.left) * width / rect.width) - left;
+              var ratio = plotWidth ? Math.max(0, Math.min(1, plotX / plotWidth)) : 0;
+              var index = weeks.length === 1 ? 0 : Math.round(ratio * (weeks.length - 1));
+              return { week: weeks[index], index: index, rect: rect };
+            }
+            function hideTooltip() {
+              tooltip.hidden = true;
+              if (focusLine) focusLine.setAttribute("display", "none");
+            }
+             function showTooltip(week, clientX, clientY, preferredSeriesIndex) {
+               var rect = svg.getBoundingClientRect();
+               var pointsAtWeek = Array.from(svg.querySelectorAll(".chart-point")).filter(function (point) {
+                 return point.dataset.week === week;
+               });
+               var preferredPoint = typeof preferredSeriesIndex === "number" ? pointsAtWeek.find(function (point) {
+                 return Number(point.dataset.seriesIndex) === preferredSeriesIndex;
+               }) : null;
+               var nearestPoint = preferredPoint ? { element: preferredPoint, distance: 0 } : pointsAtWeek.reduce(function (nearest, point) {
+                 var pointY = Number(point.getAttribute("cy")) * rect.height / 300 + rect.top;
+                 var distance = Math.abs(pointY - clientY);
+                 return !nearest || distance < nearest.distance ? { element: point, distance: distance } : nearest;
+               }, null);
+               if (!nearestPoint) return hideTooltip();
+               var selectedSeriesIndex = Number(nearestPoint.element.dataset.seriesIndex);
+               var tooltipClusterDistance = 12;
+               var selectedPointY = Number(nearestPoint.element.getAttribute("cy")) * rect.height / 300 + rect.top;
+               var nearbyPoints = pointsAtWeek.filter(function (point) {
+                 var pointY = Number(point.getAttribute("cy")) * rect.height / 300 + rect.top;
+                 return Math.abs(pointY - selectedPointY) <= tooltipClusterDistance;
+               });
+               var values = nearbyPoints.map(function (point) {
+                 var series = seriesList[Number(point.dataset.seriesIndex)];
+                 var value = series && series.points.find(function (candidate) { return candidate.week === week; });
+                 return series && value ? '<div class="history-chart-tooltip-row"><span>' + escapeHtml(series.label) + '</span><strong class="history-chart-tooltip-price">' + escapeHtml(formatTooltipPrice(value.price)) + '</strong></div>' : "";
+               }).filter(Boolean).join("");
+               if (!values || selectedSeriesIndex < 0) return hideTooltip();
+               tooltip.querySelector(".history-chart-tooltip-title").textContent = formatTooltipWeek(week);
+              tooltip.querySelector(".history-chart-tooltip-body").innerHTML = values;
+              tooltip.hidden = false;
+              var hostRect = host.getBoundingClientRect();
+              tooltip.style.left = Math.max(8, Math.min(clientX - hostRect.left + 12, hostRect.width - tooltip.offsetWidth - 8)) + "px";
+              tooltip.style.top = Math.max(8, Math.min(clientY - hostRect.top + 12, hostRect.height - tooltip.offsetHeight - 8)) + "px";
+              var weekIndex = weeks.indexOf(week);
+              if (focusLine && weekIndex !== -1) {
+                var pointX = left + (weeks.length === 1 ? plotWidth / 2 : weekIndex * plotWidth / (weeks.length - 1));
+                focusLine.setAttribute("x1", pointX.toFixed(1));
+                focusLine.setAttribute("x2", pointX.toFixed(1));
+                focusLine.setAttribute("display", "block");
+              }
+            }
+            capture.addEventListener("pointermove", function (event) {
+              var nearest = nearestWeek(event.clientX);
+              showTooltip(nearest.week, event.clientX, event.clientY);
+            });
+            capture.addEventListener("pointerleave", hideTooltip);
+            svg.querySelectorAll(".chart-point").forEach(function (point) {
+              point.addEventListener("focus", function () {
+                var rect = svg.getBoundingClientRect();
+                var cx = Number(point.getAttribute("cx")) * rect.width / width + rect.left;
+                var cy = Number(point.getAttribute("cy")) * rect.height / 300 + rect.top;
+                 showTooltip(point.dataset.week, cx, cy, Number(point.dataset.seriesIndex));
+              });
+              point.addEventListener("blur", hideTooltip);
+            });
+          }
 
         function snapshotWeek(value) {
          var date = new Date(String(value) + "T00:00:00Z");
@@ -26142,21 +26391,34 @@
             var chartRows = rows.filter(function (row) { return typeof row.price === "number" && Number.isFinite(row.price); });
             var numericCount = chartRows.length;
            var rangeCount = rows.filter(function (row) { return isRangePrice(row.price); }).length;
-           var weeks = Array.from(new Set(rows.map(function (row) { return row.week; }))).sort();
+            var weeks = Array.from(new Set(rows.map(function (row) { return row.week; }))).sort();
+            var chartWeeks = Array.from(new Set(chartRows.map(function (row) { return row.week; }))).sort();
            document.getElementById("history-summary").innerHTML = '<article class="history-kpi"><span>Snapshots recorded</span><strong>' + (explicit ? weeks.length : "0") + '</strong><span>Explicit weekly snapshots only</span></article><article class="history-kpi"><span>' + (weeks.length ? "Latest snapshot" : "History state") + '</span><strong>' + escapeHtml(weeks.slice(-1)[0] || "None") + '</strong><span>No inferred baseline</span></article><article class="history-kpi"><span>Chart points</span><strong>' + numericCount.toLocaleString("en-US") + '</strong><span>' + rangeCount.toLocaleString("en-US") + ' range prices table-only</span></article>';
-           document.getElementById("history-chart").innerHTML = renderHistoryChart(rows);
-           document.getElementById("history-body").innerHTML = rows.map(function (row) { return historyTableRow(row, true); }).join("") || '<tr><td colspan="7"><div class="empty-state"><strong>No verified weekly snapshots</strong><p>Import an explicit reviewed EUR cash snapshot to see product-by-week history.</p></div></td></tr>';
+            document.getElementById("history-chart").innerHTML = renderHistoryChart(rows);
+            document.getElementById("history-range-error").textContent = historyRangeState().invalid ? "Start week cannot be later than end week." : "";
+             bindHistoryChartTooltip(chartWeeks, chartRows.length ? (function () {
+              var grouped = {};
+              chartRows.forEach(function (row) {
+                var key = [row.product, row.configuration, row.channel].join("\u0000");
+                if (!grouped[key]) grouped[key] = { label: row.product + " · " + row.configuration + " · " + row.channel, points: [] };
+                grouped[key].points.push(row);
+              });
+              return Object.keys(grouped).map(function (key) { return grouped[key]; });
+             }()) : [], Math.max(680, chartWeeks.length * 148 + 96), 72, Math.max(680, chartWeeks.length * 148 + 96) - 72 - 24);
+            document.getElementById("history-body").innerHTML = rows.map(function (row) { return historyTableRow(row, true); }).join("") || '<tr><td colspan="7"><div class="empty-state"><strong>No verified weekly snapshots</strong><p>Import an explicit reviewed EUR cash snapshot to see product-by-week history.</p></div></td></tr>';
          }
 
-        function renderPriceList() {
-         ["phone", "tablet"].forEach(function (device) {
+         function renderPriceList() {
+          populatePriceListWeeks();
+          var selectedWeek = selectedPriceListWeek();
+          ["phone", "tablet"].forEach(function (device) {
            var rows = priceListRows(device);
            var tbody = document.getElementById("price-list-" + device + "-body");
            var count = document.getElementById("price-list-" + device + "-count");
-           count.textContent = rows.length.toLocaleString("en-US") + " active cash offers";
+            count.textContent = rows.length.toLocaleString("en-US") + " active cash offers · " + (selectedWeek || "No history week");
            tbody.innerHTML = rows.map(function (offer) {
              var pdp = offer.source ? '<a class="pdp-link" href="' + escapeHtml(offer.source) + '" target="_blank" rel="noopener noreferrer">' + escapeHtml(offer.source) + '</a>' : '<span class="no-price">Not verified</span>';
-              return '<tr><th scope="row">' + escapeHtml(offer.product) + '</th><td>' + escapeHtml(offer.configuration) + '</td><td>' + escapeHtml(offer.brand) + '</td><td>' + escapeHtml(channelDisplayName(offer)) + '</td><td class="price price-cash">' + escapeHtml(formatPrice(offer.quote.price)) + '</td><td>' + statusBadge(offer.status) + '</td><td>' + pdp + '</td></tr>';
+               return '<tr><th scope="row">' + escapeHtml(offer.product) + '</th><td>' + escapeHtml(offer.configuration) + '</td><td>' + escapeHtml(offer.brand) + '</td><td>' + escapeHtml(channelDisplayName(offer)) + '</td><td><span class="price price-cash">' + escapeHtml(formatPrice(offer.quote.price)) + '</span></td><td>' + statusBadge(offer.status) + '</td><td>' + pdp + '</td></tr>';
            }).join("") || '<tr><td colspan="7"><div class="empty-state"><strong>No matching cash offers</strong><p>Adjust the shared filters to see available rows.</p></div></td></tr>';
          });
           var unknownNames = Array.from(new Set(filteredOffers(true).filter(function (offer) { return networkType(offer) === "Unknown"; }).map(function (offer) { return offer.product; }))).sort(function (a, b) { return a.localeCompare(b); });
@@ -26198,13 +26460,32 @@
             });
             var commercialOffers = offers.filter(function (offer) { return !isReferenceOnlyOffer(offer) && historyDeviceMatches(offer); });
            var brands = Array.from(new Set(commercialOffers.map(displayBrand))).sort(function (a, b) { return a.localeCompare(b); });
-          var bands = ["< €200", "€200–499", "€500–699", "€700–999", "€1,000+", "Range prices"];
+           var bands = ["< €200", "€200–499", "€500–699", "€700–999", "€1,000+", "Range prices"];
+           var select;
+           var selectedWeek;
+           var emptyLabel;
             renderHistoryProductOptions(products);
             renderMultiSelectOptions("history-brand-filter", brands, "All Brand");
            renderMultiSelectOptions("history-band-filter", bands, "All price bands");
            refreshFilterDropdownLabel("history-brand-filter", "All Brand");
            refreshFilterDropdownLabel("history-band-filter", "All price bands");
-        }
+           var historyChannels = Array.from(new Set(PRICE_HISTORY.reduce(function (values, record) {
+             (Array.isArray(record.offers) ? record.offers : [record]).forEach(function (row) { if (row && row.channel && !row.reference_only && !isReferenceOnlyChannel(row.channel)) values.push(row.channel); });
+             return values;
+           }, []))).sort(function (a, b) { return a.localeCompare(b); });
+           var historyWeeks = Array.from(new Set(PRICE_HISTORY.map(function (record) { return record.week; }).filter(Boolean))).sort();
+           var channelSelect = document.getElementById("history-channel-filter");
+           var selectedChannel = channelSelect.value;
+           channelSelect.innerHTML = '<option value="">All channels</option>' + historyChannels.map(function (channel) { return '<option value="' + escapeHtml(channel) + '">' + escapeHtml(channel) + '</option>'; }).join("");
+           if (historyChannels.indexOf(selectedChannel) !== -1) channelSelect.value = selectedChannel;
+           ["history-start-week", "history-end-week"].forEach(function (id) {
+             select = document.getElementById(id);
+             selectedWeek = select.value;
+             emptyLabel = id === "history-start-week" ? "No start bound" : "No end bound";
+             select.innerHTML = '<option value="">' + emptyLabel + '</option>' + historyWeeks.map(function (week) { return '<option value="' + escapeHtml(week) + '">' + escapeHtml(week) + '</option>'; }).join("");
+             if (historyWeeks.indexOf(selectedWeek) !== -1) select.value = selectedWeek;
+           });
+         }
 
         function comparisonOffers(selectedDevice, familyOnly) {
           var grouped = {};
@@ -26214,7 +26495,7 @@
              return !isReferenceOnlyOffer(offer) && deviceType(offer) === selectedDevice && isActiveNumeric && (familyOnly ? isFamily : !isFamily);
           }).forEach(function (offer) {
             var key = [displayBrand(offer), offer.product, offer.configKey].join("\u0000");
-            if (!grouped[key] || offer.quote.price < grouped[key].price) grouped[key] = { product: offer.product, brand: displayBrand(offer), configuration: offer.configuration, configKey: offer.configKey, price: offer.quote.price, band: priceBand(offer.quote.price).label, source: offer.source };
+              if (!grouped[key] || offer.quote.price < grouped[key].price) grouped[key] = { product: offer.product, brand: displayBrand(offer), series: offer.familySeries, configuration: offer.configuration, configKey: offer.configKey, price: offer.quote.price, band: priceBand(offer.quote.price).label, source: offer.source };
           });
           return Object.keys(grouped).map(function (key) { return grouped[key]; });
         }
@@ -26222,10 +26503,12 @@
         function familyComparisonRows(selectedDevice) {
            var baselineRows = comparisonOffers(selectedDevice, true);
            var alternativeRows = comparisonOffers(selectedDevice, false);
-           var selectedBands = selectedValues("family-band-filter");
-           var selectedCompetingBrands = selectedValues("family-competing-brand-filter");
-           if (selectedBands.length) baselineRows = baselineRows.filter(function (row) { return selectedBands.indexOf(row.band) !== -1; });
-           if (selectedCompetingBrands.length) alternativeRows = alternativeRows.filter(function (row) { return selectedCompetingBrands.indexOf(row.brand) !== -1; });
+            var selectedBands = selectedValues("family-band-filter");
+            var selectedCompetingBrands = selectedValues("family-competing-brand-filter");
+            var selectedSeries = selectedValues("family-series-filter");
+            if (selectedBands.length) baselineRows = baselineRows.filter(function (row) { return selectedBands.indexOf(row.band) !== -1; });
+            if (selectedSeries.length) baselineRows = baselineRows.filter(function (row) { return selectedSeries.indexOf(row.series) !== -1; });
+            if (selectedCompetingBrands.length) alternativeRows = alternativeRows.filter(function (row) { return selectedCompetingBrands.indexOf(row.brand) !== -1; });
           var rows = [];
           baselineRows.forEach(function (baseline) {
              var exact = alternativeRows.filter(function (candidate) { return candidate.configKey === baseline.configKey && candidate.band === baseline.band; });
@@ -26342,11 +26625,13 @@
         }
 
          function populateFamilyFilters() {
-           renderMultiSelectOptions("family-band-filter", ["< €200", "€200–499", "€500–699", "€700–999", "€1,000+"], "All price bands");
-           var competingBrands = Array.from(new Set(comparisonOffers(xiaomiFamilyDevice, false).map(function (row) { return row.brand; }))).sort(function (a, b) { return a.localeCompare(b); });
+            renderMultiSelectOptions("family-band-filter", ["< €200", "€200–499", "€500–699", "€700–999", "€1,000+"], "All price bands");
+            renderMultiSelectOptions("family-series-filter", ["POCO", "XIAOMI", "REDMI Note", "REDMI"], "All series");
+            var competingBrands = Array.from(new Set(comparisonOffers(xiaomiFamilyDevice, false).map(function (row) { return row.brand; }))).sort(function (a, b) { return a.localeCompare(b); });
            renderMultiSelectOptions("family-competing-brand-filter", competingBrands, "All Brand");
-           refreshFilterDropdownLabel("family-band-filter", "All price bands");
-           refreshFilterDropdownLabel("family-competing-brand-filter", "All Brand");
+            refreshFilterDropdownLabel("family-band-filter", "All price bands");
+            refreshFilterDropdownLabel("family-series-filter", "All series");
+            refreshFilterDropdownLabel("family-competing-brand-filter", "All Brand");
         }
 
        function downloadPriceList(device) {
@@ -26363,7 +26648,7 @@
          var url = URL.createObjectURL(blob);
          var link = document.createElement("a");
          link.href = url;
-         link.download = "greece-" + device + "-price-list-" + snapshot.last_updated + ".xls";
+          link.download = "greece-" + device + "-price-list-" + (selectedPriceListWeek() || snapshot.last_updated) + ".xls";
          document.body.appendChild(link);
          link.click();
          link.remove();
@@ -26597,16 +26882,18 @@
           activateTab(allTabs[nextIndex].dataset.tab);
         });
       });
-       ["search", "channel-filter", "status-filter", "price-min", "price-max"].forEach(function (id) {
-         ["input", "change"].forEach(function (eventName) { document.getElementById(id).addEventListener(eventName, renderLedger); });
-       });
+        ["search", "channel-filter", "status-filter", "price-min", "price-max"].forEach(function (id) {
+          ["input", "change"].forEach(function (eventName) { document.getElementById(id).addEventListener(eventName, renderLedger); });
+        });
+        document.getElementById("price-list-week").addEventListener("change", renderPriceList);
        document.getElementById("brand-options").addEventListener("change", function () { cascadeModels(); renderLedger(); });
        document.getElementById("model-options").addEventListener("change", function () { refreshFilterLabels(); renderLedger(); });
        document.getElementById("network-options").addEventListener("change", function () { refreshFilterLabels(); renderLedger(); });
-          [["history-brand-filter", "All Brand"], ["history-band-filter", "All price bands"]].forEach(function (filter) {
-           document.getElementById(filter[0] + "-options").addEventListener("change", function (event) { handleCheckboxDropdownChange(filter[0], filter[1], renderHistory, event); });
-          });
-          document.getElementById("history-time-range").addEventListener("change", renderHistory);
+           [["history-brand-filter", "All Brand"], ["history-band-filter", "All price bands"]].forEach(function (filter) {
+            document.getElementById(filter[0] + "-options").addEventListener("change", function (event) { handleCheckboxDropdownChange(filter[0], filter[1], renderHistory, event); });
+           });
+           document.getElementById("history-time-range").addEventListener("change", renderHistory);
+          ["history-channel-filter", "history-start-week", "history-end-week"].forEach(function (id) { document.getElementById(id).addEventListener("change", renderHistory); });
          document.getElementById("history-device-filter").addEventListener("change", function () {
            populateHistoryFilters();
            renderHistory();
@@ -26626,8 +26913,11 @@
            document.getElementById("history-reset").addEventListener("click", function () {
             historyProductSelections = {};
             document.getElementById("history-product-search").value = "";
-            document.getElementById("history-device-filter").value = "";
-             document.getElementById("history-time-range").value = "all";
+             document.getElementById("history-device-filter").value = "";
+              document.getElementById("history-channel-filter").value = "";
+              document.getElementById("history-time-range").value = "all";
+              document.getElementById("history-start-week").value = "";
+              document.getElementById("history-end-week").value = "";
              ["history-brand-filter", "history-band-filter"].forEach(function (id) {
                var all = document.querySelector("#" + id + "-options input[value=\"__all__\"]");
                if (all) all.checked = true;
@@ -26636,15 +26926,15 @@
              populateHistoryFilters();
              renderHistory();
            });
-          [["family-band-filter", "All price bands"], ["family-competing-brand-filter", "All Brand"]].forEach(function (filter) {
-            document.getElementById(filter[0] + "-options").addEventListener("change", function (event) { handleCheckboxDropdownChange(filter[0], filter[1], renderFamilyComparison, event); });
-          });
+           [["family-band-filter", "All price bands"], ["family-competing-brand-filter", "All Brand"], ["family-series-filter", "All series"]].forEach(function (filter) {
+             document.getElementById(filter[0] + "-options").addEventListener("change", function (event) { handleCheckboxDropdownChange(filter[0], filter[1], renderFamilyComparison, event); });
+           });
             document.getElementById("family-reset").addEventListener("click", function () {
-            ["family-band-filter", "family-competing-brand-filter"].forEach(function (id) {
+             ["family-band-filter", "family-competing-brand-filter", "family-series-filter"].forEach(function (id) {
               var all = document.querySelector('#' + id + '-options input[value="__all__"]');
               if (all) all.checked = true;
                document.querySelectorAll('#' + id + '-options input:not([value="__all__"])').forEach(function (input) { input.checked = false; });
-               refreshFilterDropdownLabel(id, id === "family-competing-brand-filter" ? "All Brand" : "All price bands");
+                refreshFilterDropdownLabel(id, id === "family-competing-brand-filter" ? "All Brand" : id === "family-series-filter" ? "All series" : "All price bands");
              });
             renderFamilyComparison();
           });
